@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- TRX Rendered Diagram -->
+  <rect x="50" y="50" width="100" height="50" fill="cyan" />
+  <text x="60" y="80">API Gateway</text>
+  <line x1="150" y1="75" x2="250" y2="75" stroke="magenta" />
+  <rect x="250" y="50" width="100" height="50" fill="cyan" />
+  <text x="260" y="80">Auth Service</text>
+</svg>

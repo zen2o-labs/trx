@@ -1,0 +1,30 @@
+[package]
+name = "trx-engine"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+# Internal Workspace Dependencies
+trx-syntax = { workspace = true }
+
+# Parsing and Logic
+pest = { workspace = true }
+pest_derive = { workspace = true }
+thiserror = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Math and Data Structures
+kurbo = { workspace = true }
+smallvec = { workspace = true }
+petgraph = { workspace = true }
+
+[dev-dependencies]
+trx-layout = { workspace = true }
+

@@ -1,0 +1,28 @@
+# Main Server Architecture
+Client[Browser] -> API[Gateway] : "HTTP GET"
+API -> Auth[Auth_Service]
+Auth == AuthDB[PostgreSQL]
+API >> Processor[Job_Queue]
+Processor -> Worker1[Node_A]
+Processor -> Worker2[Node_B]
+
+packet TCP_Header [32 bits] {
+    0..15   : src_port [type: u16]
+    16..31  : dst_port [type: u16]
+    32..63  : seq_num  [type: u32]
+    
+    constraint: seq_num <= 0xFFFFFFFF
+}
+
+state Connection_Manager {
+    [*] -> Idle
+    Idle -> Connecting : @trigger_syn
+    Connecting -> Established : @ack_received
+    Established -> Error : @timeout
+}
+
+xy Performance_Profile {
+    x_axis: "Time (ms)"
+    y_axis: "Heap Usage"
+    data: @rust_runtime::mem_stats
+}

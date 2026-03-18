@@ -1,0 +1,6 @@
+api_gateway: cloud
+auth_service: rect
+database: database
+
+api_gateway -> auth_service
+auth_service -> database

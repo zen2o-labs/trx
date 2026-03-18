@@ -1,0 +1,13 @@
+packet NetworkHeader [size: 64] {
+    0..8:   Version [primary]
+    8..16:  Flags
+    16..32: Sequence
+    32..64: Payload [data]
+    
+    constraint: Version == 1
+}
+
+node eth0 [type: "interface"]
+node router [type: "gateway"]
+
+eth0 -> router : "Send Header"

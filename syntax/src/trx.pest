@@ -1,0 +1,72 @@
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+COMMENT    = _{ "//" ~ (!NEWLINE ~ ANY)* }
+
+file = { SOI ~ (diagram | packet_decl | state_decl | xy_decl)* ~ EOI }
+
+diagram = { "#" ~ WHITESPACE? ~ diagram_name ~ NEWLINE* ~ diagram_stmt* }
+diagram_name = @{ (!NEWLINE ~ ANY)+ }
+
+diagram_stmt = _{
+    variable_decl |
+    layer_block |
+    connection |
+    node_decl |
+    style_decl
+}
+
+statement = _{
+    packet_decl |
+    state_decl |
+    xy_decl |
+    diagram_stmt
+}
+
+variable_decl = { "let" ~ identifier ~ "=" ~ math_expression }
+
+math_expression = { math_term ~ (WHITESPACE* ~ math_op ~ WHITESPACE* ~ math_term)* }
+math_term = { property_ref | number_with_unit | number | identifier }
+property_ref = { identifier ~ ("." ~ identifier)+ }
+number_with_unit = @{ number ~ identifier }
+math_op = { "+" | "-" | "*" | "/" }
+number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
+
+property_assignment = { identifier ~ ":" ~ math_expression }
+property_block = { "{" ~ (property_assignment ~ ("," | NEWLINE)*)* ~ "}" }
+
+layer_block = { "layer" ~ identifier ~ "{" ~ (diagram_stmt)* ~ "}" }
+
+node_decl = { ("node" ~ WHITESPACE+)? ~ identifier ~ ("[" ~ attributes ~ "]")? ~ (WHITESPACE* ~ property_block)? }
+
+node_ref = { identifier ~ ("." ~ identifier)* }
+connection = { node_ref ~ WHITESPACE* ~ connection_arrow ~ WHITESPACE* ~ node_ref ~ (":" ~ label)? }
+connection_arrow = _{ attr_arrow | arrow }
+attr_arrow = { ("==" | "--") ~ "[" ~ attributes ~ "]" ~ ("==" | "->" | ">>") }
+
+arrow = { ">>" | "->" | "==" }
+
+style_decl = { "." ~ identifier ~ "{" ~ style_props ~ "}" }
+
+packet_decl = { "packet" ~ identifier ~ ("[" ~ packet_attrs ~ "]")? ~ "{" ~ packet_stmts ~ "}" }
+packet_attrs = { (!( "]" | "{" ) ~ ANY)* }
+packet_stmts = { (packet_field | packet_constraint)* }
+packet_field = { number_range ~ ":" ~ identifier ~ ("[" ~ attributes ~ "]")? }
+number_range = @{ ASCII_DIGIT+ ~ ".." ~ ASCII_DIGIT+ }
+packet_constraint = { "constraint" ~ ":" ~ (!"}" ~ ANY)* }
+
+state_decl = { "state" ~ identifier ~ "{" ~ state_stmts ~ "}" }
+state_stmts = { state_transition* }
+state_transition = { state_id ~ "->" ~ state_id ~ (":" ~ "@" ~ identifier)? }
+state_id = @{ "[*]" | identifier }
+
+xy_decl = { "xy" ~ identifier ~ "{" ~ xy_stmts ~ "}" }
+xy_stmts = { (xy_prop)* }
+xy_prop = { identifier ~ ":" ~ (string_literal | metric_bind) }
+string_literal = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
+metric_bind = { "@" ~ (!(NEWLINE | "}") ~ ANY)* }
+
+reserved    = _{ "packet" | "state" | "xy" | "constraint" }
+identifier  = @{ !reserved ~ (ASCII_ALPHANUMERIC | "_")+ }
+label       = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
+attributes  = { attribute_kv ~ ("," ~ attribute_kv)* }
+attribute_kv = { identifier ~ (":" ~ WHITESPACE* ~ identifier)? }
+style_props = { (!"}" ~ ANY)* }

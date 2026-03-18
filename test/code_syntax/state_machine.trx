@@ -1,0 +1,13 @@
+state AuthFlow {
+    [*] -> Idle
+    Idle -> Authenticating : "@login"
+    Authenticating -> Authenticated : "@success"
+    Authenticating -> Idle : "@failure"
+    Authenticated -> Idle : "@logout"
+}
+
+node user_service [style: "service"]
+node auth_db [style: "database"]
+
+user_service -> auth_db : "Query User"
+auth_db -> user_service : "Return Data"

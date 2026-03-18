@@ -1,0 +1,170 @@
+{
+  "diagrams": [
+    {
+      "name": "Main Server Architecture",
+      "node_ids": [
+        "Client",
+        "API",
+        "Auth",
+        "AuthDB",
+        "Processor",
+        "Worker1",
+        "Worker2"
+      ],
+      "node_labels": [
+        "Client",
+        "API",
+        "Auth",
+        "AuthDB",
+        "Processor",
+        "Worker1",
+        "Worker2"
+      ],
+      "node_tags": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "node_kind": [
+        "Box",
+        "Box",
+        "Box",
+        "Box",
+        "Box",
+        "Box",
+        "Box"
+      ],
+      "node_x": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        300.0,
+        300.0,
+        500.0
+      ],
+      "node_y": [
+        100.0,
+        250.0,
+        400.0,
+        550.0,
+        400.0,
+        550.0,
+        550.0
+      ],
+      "node_width": [
+        120.0,
+        120.0,
+        120.0,
+        120.0,
+        120.0,
+        120.0,
+        120.0
+      ],
+      "node_height": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "connections_from": [
+        0,
+        1,
+        2,
+        1,
+        4,
+        4
+      ],
+      "connections_to": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "connection_labels": [
+        "HTTP GET",
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "connection_arrows": [
+        "->",
+        "->",
+        "==",
+        ">>",
+        "->",
+        "->"
+      ]
+    }
+  ],
+  "packets": [
+    {
+      "name": "TCP_Header",
+      "size": "32 bits",
+      "fields": [
+        {
+          "range": "0..15",
+          "name": "src_port",
+          "field_type": "type: u16"
+        },
+        {
+          "range": "16..31",
+          "name": "dst_port",
+          "field_type": "type: u16"
+        },
+        {
+          "range": "32..63",
+          "name": "seq_num",
+          "field_type": "type: u32"
+        }
+      ],
+      "constraint": "seq_num <= 0xFFFFFFFF"
+    }
+  ],
+  "states": [
+    {
+      "name": "Connection_Manager",
+      "transitions": [
+        {
+          "from": "[*]",
+          "to": "Idle",
+          "trigger": null
+        },
+        {
+          "from": "Idle",
+          "to": "Connecting",
+          "trigger": "trigger_syn"
+        },
+        {
+          "from": "Connecting",
+          "to": "Established",
+          "trigger": "ack_received"
+        },
+        {
+          "from": "Established",
+          "to": "Error",
+          "trigger": "timeout"
+        }
+      ]
+    }
+  ],
+  "xys": [
+    {
+      "name": "Performance_Profile",
+      "x_axis": "Time (ms)",
+      "y_axis": "Heap Usage",
+      "data": "@rust_runtime::mem_stats"
+    }
+  ]
+}

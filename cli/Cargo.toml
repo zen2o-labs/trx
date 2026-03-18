@@ -1,0 +1,9 @@
+[package]
+name = "trx-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+trx-engine = { workspace = true }
+trx-layout = { workspace = true }
+serde_json.workspace = true

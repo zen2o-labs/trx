@@ -1,0 +1,12 @@
+[package]
+name = "trx-syntax"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+pest = { workspace = true }
+pest_derive = { workspace = true }
+thiserror = { workspace = true }

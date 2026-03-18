@@ -1,0 +1,23 @@
+{
+    "project": "example",
+    "diagrams": [
+        {
+            "name": "basic",
+            "nodes": [
+                "api_gateway",
+                "auth_service",
+                "database"
+            ],
+            "connections": [
+                {
+                    "from": "api_gateway",
+                    "to": "auth_service"
+                },
+                {
+                    "from": "auth_service",
+                    "to": "database"
+                }
+            ]
+        }
+    ]
+}
