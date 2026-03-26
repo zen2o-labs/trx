@@ -1,0 +1,141 @@
+{
+  "diagrams": [
+    {
+      "name": "PhysicsTest",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "cluster",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 250.94987,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "n1",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 371.67395,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 539.18567,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "n2",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 712.5128,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 887.4872,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "n3",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 1060.8148,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 1228.3258,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "n4",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 1349.0502,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": [
+        {
+          "from": "n1 ",
+          "to": "n2\n    ",
+          "arrow": "==",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "n2 ",
+          "to": "n3\n    ",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "n3 ",
+          "to": "n4\n    ",
+          "arrow": ">>",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "n4 ",
+          "to": "n1\n",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        }
+      ]
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "variables": {}
+}

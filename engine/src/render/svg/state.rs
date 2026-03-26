@@ -1,7 +1,6 @@
 use crate::ast::Project;
 
-pub fn render_states(_project: &Project, _svg: &mut String, _y_offset: &mut f32) {
-    /*
+pub fn render_states(project: &Project, svg: &mut String, y_offset: &mut f32) {
     for state in &project.states {
         svg.push_str(&format!(
             r#"<text x="20" y="{}" class="diagram-title">State Machine: {}</text>"#,
@@ -18,7 +17,7 @@ pub fn render_states(_project: &Project, _svg: &mut String, _y_offset: &mut f32)
             .collect();
 
         for s in unique_states {
-            state_positions.insert(s, (x_offset, y_offset));
+            state_positions.insert(s, (x_offset, *y_offset));
             svg.push_str(&format!(
                 "<circle cx=\"{}\" cy=\"{}\" r=\"30\" class=\"node\" fill=\"#fafafa\" />",
                 x_offset, *y_offset
@@ -48,5 +47,4 @@ pub fn render_states(_project: &Project, _svg: &mut String, _y_offset: &mut f32)
 
         *y_offset += 100.0;
     }
-    */
 }

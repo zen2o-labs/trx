@@ -1,0 +1,104 @@
+{
+  "diagrams": [
+    {
+      "name": "Mixed",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "main",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 186.28746,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "App",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "height": {
+                    "BinaryOp": [
+                      {
+                        "String": "base"
+                      },
+                      "*",
+                      {
+                        "String": "2"
+                      }
+                    ]
+                  },
+                  "width": {
+                    "BinaryOp": [
+                      {
+                        "String": "base"
+                      },
+                      "*",
+                      {
+                        "String": "5"
+                      }
+                    ]
+                  }
+                },
+                "attributes": {},
+                "x": 213.71254,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": []
+    }
+  ],
+  "packets": [
+    {
+      "name": "Protocol",
+      "size": "",
+      "fields": [
+        {
+          "range": "0..7",
+          "name": "header",
+          "field_type": ""
+        }
+      ],
+      "constraint": null
+    }
+  ],
+  "states": [
+    {
+      "name": "FSM",
+      "transitions": [
+        {
+          "from": "IDLE",
+          "to": "BUSY",
+          "trigger": "start"
+        }
+      ]
+    }
+  ],
+  "xys": [
+    {
+      "name": "Chart",
+      "x_axis": "X",
+      "y_axis": "Y",
+      "data": "D"
+    }
+  ],
+  "variables": {
+    "base": {
+      "String": "20\n"
+    }
+  }
+}

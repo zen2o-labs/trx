@@ -1,8 +1,6 @@
 use crate::ast::Project;
 
-pub fn render_xys(_project: &Project, _svg: &mut String, _y_offset: &mut f32) {
-
-    /*
+pub fn render_xys(project: &Project, svg: &mut String, y_offset: &mut f32) {
     for xy in &project.xys {
         svg.push_str(&format!(
             r#"<text x="20" y="{}" class="diagram-title">XY Chart: {}</text>"#,
@@ -48,5 +46,4 @@ pub fn render_xys(_project: &Project, _svg: &mut String, _y_offset: &mut f32) {
 
         *y_offset += chart_height + 50.0;
     }
-    */
 }

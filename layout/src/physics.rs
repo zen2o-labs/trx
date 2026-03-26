@@ -1,4 +1,3 @@
-use crate::quadtree::Point;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Vector2D {

@@ -9,6 +9,46 @@ use std::collections::HashMap;
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct Project {
     pub diagrams: Vec<NamedDiagram>,
+    pub packets: Vec<PacketDeclaration>,
+    pub states: Vec<StateDeclaration>,
+    pub xys: Vec<XyDeclaration>,
+    pub variables: HashMap<String, Expression>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PacketField {
+    pub range: String,
+    pub name: String,
+    pub field_type: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PacketDeclaration {
+    pub name: String,
+    pub size: String,
+    pub fields: Vec<PacketField>,
+    pub constraint: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StateTransition {
+    pub from: String,
+    pub to: String,
+    pub trigger: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StateDeclaration {
+    pub name: String,
+    pub transitions: Vec<StateTransition>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct XyDeclaration {
+    pub name: String,
+    pub x_axis: String,
+    pub y_axis: String,
+    pub data: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -46,8 +86,8 @@ pub struct Node {
     pub kind: ShapeKind,
     pub properties: HashMap<String, Expression>,
     pub attributes: HashMap<String, String>,
-    
-    // Layout computed properties
+
+    // Layout compute properties
     pub x: f32,
     pub y: f32,
     pub width: f32,

@@ -1,7 +1,7 @@
 use crate::ast::{Connection, NamedDiagram, Node, Project, ShapeKind};
 use std::collections::HashMap;
 
-/// This allows constructing a diagram entirely in native memory
+/// allows constructing a diagram entirely in native memory
 /// without relying on the Pest text parser.
 pub struct ProjectBuilder {
     project: Project,
@@ -12,6 +12,10 @@ impl ProjectBuilder {
         Self {
             project: Project {
                 diagrams: Vec::new(),
+                packets: Vec::new(),
+                states: Vec::new(),
+                xys: Vec::new(),
+                variables: HashMap::new(),
             },
         }
     }

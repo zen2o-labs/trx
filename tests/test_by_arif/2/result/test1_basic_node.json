@@ -1,0 +1,55 @@
+{
+  "diagrams": [
+    {
+      "name": "BasicNode",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "main",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 186.28746,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "A",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "height": {
+                    "String": "50"
+                  },
+                  "width": {
+                    "String": "100"
+                  }
+                },
+                "attributes": {
+                  "color": "blue"
+                },
+                "x": 213.71254,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": []
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "variables": {}
+}

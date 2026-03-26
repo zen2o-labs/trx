@@ -1,0 +1,9 @@
+let base = 50
+
+# MathNode
+layer main {
+    node C {
+        width: base * 3
+        height: base + 20
+    }
+}

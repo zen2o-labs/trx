@@ -1,7 +1,7 @@
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
 COMMENT    = _{ "//" ~ (!NEWLINE ~ ANY)* }
 
-file = { SOI ~ (diagram | packet_decl | state_decl | xy_decl)* ~ EOI }
+file = { SOI ~ (diagram | packet_decl | state_decl | xy_decl | variable_decl | style_decl)* ~ EOI }
 
 diagram = { "#" ~ WHITESPACE? ~ diagram_name ~ NEWLINE* ~ diagram_stmt* }
 diagram_name = @{ (!NEWLINE ~ ANY)+ }
