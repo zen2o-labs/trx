@@ -1,5 +1,6 @@
 pub mod element;
 pub mod style;
+pub mod style_buffer;
 
 pub use crate::ast::element::{ShapeKind, Id};
 
@@ -12,7 +13,24 @@ pub struct Project {
     pub packets: Vec<PacketDeclaration>,
     pub states: Vec<StateDeclaration>,
     pub xys: Vec<XyDeclaration>,
+    pub sqltables: Vec<SqlTableDeclaration>,
     pub variables: HashMap<String, Expression>,
+}
+
+/// Milestone 04 — Schema Visualization
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SqlField {
+    pub name: String,
+    pub field_type: String,
+    pub is_pk: bool,
+    pub is_fk: bool,
+    pub fk_ref: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SqlTableDeclaration {
+    pub name: String,
+    pub fields: Vec<SqlField>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -56,6 +74,8 @@ pub struct NamedDiagram {
     pub name: String,
     pub root: Layer,
     pub connections: Vec<Connection>,
+    /// Milestone 08 — Scenario State Management
+    pub scenario: Option<String>,
 }
 
 impl NamedDiagram {
@@ -68,6 +88,7 @@ impl NamedDiagram {
                 layers: Vec::new(),
             },
             connections: Vec::new(),
+            scenario: None,
         }
     }
 }

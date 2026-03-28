@@ -1,0 +1,164 @@
+{
+  "diagrams": [
+    {
+      "name": "Infrastructure",
+      "root": {
+        "id": "root",
+        "nodes": [
+          {
+            "id": "LoadBalancer",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "140"
+              }
+            },
+            "attributes": {
+              "fill": "\"#0ea5e9\"",
+              "shape": "hexagon"
+            },
+            "x": 235.87729,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "API_Gateway",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "160"
+              }
+            },
+            "attributes": {
+              "fill": "\"#cbd5e1\"",
+              "shape": "parallelogram"
+            },
+            "x": 353.21057,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Web_Server",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "120"
+              }
+            },
+            "attributes": {
+              "fill": "\"#f1f5f9\"",
+              "shape": "rounded"
+            },
+            "x": 516.654,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Database",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "120"
+              }
+            },
+            "attributes": {
+              "fill": "\"#f59e0b\"",
+              "shape": "cylinder"
+            },
+            "x": 683.346,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Cache",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "120"
+              }
+            },
+            "attributes": {
+              "fill": "\"#ef4444\"",
+              "shape": "cylinder"
+            },
+            "x": 846.7893,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "External_API",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "width": {
+                "String": "160"
+              }
+            },
+            "attributes": {
+              "shape": "cloud",
+              "fill": "\"#a855f7\""
+            },
+            "x": 964.1232,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          }
+        ],
+        "layers": []
+      },
+      "connections": [
+        {
+          "from": "LoadBalancer ",
+          "to": "API_Gateway ",
+          "arrow": "->",
+          "label": "HTTP 443",
+          "attributes": {}
+        },
+        {
+          "from": "API_Gateway ",
+          "to": "Web_Server ",
+          "arrow": "->",
+          "label": "Routing",
+          "attributes": {}
+        },
+        {
+          "from": "Web_Server ",
+          "to": "Database ",
+          "arrow": "->",
+          "label": "SQL",
+          "attributes": {}
+        },
+        {
+          "from": "Web_Server ",
+          "to": "Cache ",
+          "arrow": "->",
+          "label": "Memcached",
+          "attributes": {}
+        },
+        {
+          "from": "Web_Server ",
+          "to": "External_API ",
+          "arrow": "->",
+          "label": "Webhook",
+          "attributes": {}
+        }
+      ],
+      "scenario": null
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "sqltables": [],
+  "variables": {}
+}

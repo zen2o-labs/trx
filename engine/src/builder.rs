@@ -15,6 +15,7 @@ impl ProjectBuilder {
                 packets: Vec::new(),
                 states: Vec::new(),
                 xys: Vec::new(),
+                sqltables: Vec::new(),
                 variables: HashMap::new(),
             },
         }

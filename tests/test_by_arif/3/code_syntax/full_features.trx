@@ -1,0 +1,24 @@
+let base_padding = 10
+let bg_color = "#f8fafc"
+
+.theme {
+    fill: bg_color
+    stroke: "#334155"
+}
+
+packet TCP_Header [32 bits] {
+    0..15 : src_port [type: u16]
+    16..31 : dst_port [type: u16]
+}
+
+xy Telemetry {
+    x_axis: "Time"
+    y_axis: "CPU"
+    data: @prometheus::cpu_usage
+}
+
+# Architecture Overview
+NodeA [shape: hexagon] { padding: base_padding * 2 }
+NodeB [shape: cylinder]
+
+NodeA -> NodeB : "TCP_Header"

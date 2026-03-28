@@ -10,6 +10,7 @@ use blocks::diagram::parse_single_diagram;
 use blocks::packet::parse_packet_decl;
 use blocks::state::parse_state_decl;
 use blocks::xy::parse_xy_decl;
+use blocks::sqltable::parse_sqltable_decl;
 
 pub fn parse(input: &str) -> Result<Project, ParseError> {
     let pairs = TrxParser::parse(Rule::file, input)
@@ -32,6 +33,9 @@ pub fn parse(input: &str) -> Result<Project, ParseError> {
                     }
                     Rule::xy_decl => {
                         project.xys.push(parse_xy_decl(inner_pair)?);
+                    }
+                    Rule::sqltable_decl => {
+                        project.sqltables.push(parse_sqltable_decl(inner_pair)?);
                     }
                     Rule::variable_decl => {
                         let mut inner = inner_pair.into_inner();

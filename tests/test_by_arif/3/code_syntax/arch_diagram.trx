@@ -1,0 +1,13 @@
+# Infrastructure
+LoadBalancer [shape: hexagon, fill: "#0ea5e9"] { width: 140 }
+API_Gateway  [shape: parallelogram, fill: "#cbd5e1"] { width: 160 }
+Web_Server   [shape: rounded, fill: "#f1f5f9"] { width: 120 }
+Database     [shape: cylinder, fill: "#f59e0b"] { width: 120 }
+Cache        [shape: cylinder, fill: "#ef4444"] { width: 120 }
+External_API [shape: cloud, fill: "#a855f7"] { width: 160 }
+
+LoadBalancer -> API_Gateway : "HTTP 443"
+API_Gateway -> Web_Server : "Routing"
+Web_Server -> Database : "SQL"
+Web_Server -> Cache : "Memcached"
+Web_Server -> External_API : "Webhook"
