@@ -1,0 +1,12 @@
+# CI/CD Pipeline
+# This tests the Layered (Sugiyama) layout where nodes should naturally flow left-to-right or top-to-bottom
+Commit [shape: package, fill: "#e2e8f0"]
+Build [shape: gear, fill: "#38bdf8"]
+Test [shape: shield, fill: "#10b981"]
+Package [shape: container, fill: "#f59e0b"]
+Deploy [shape: cloud, fill: "#a855f7"]
+
+Commit -> Build : "trigger"
+Build -> Test : "artifacts"
+Test -> Package : "success"
+Package -> Deploy : "image"

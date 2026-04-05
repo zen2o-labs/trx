@@ -1,8 +1,6 @@
 use crate::ast::Project;
 
-pub fn render_packets(_project: &Project, _svg: &mut String, _y_offset: &mut f32) {
-
-    /*
+pub fn render_packets(project: &Project, svg: &mut String, y_offset: &mut f32) {
     for packet in &project.packets {
         svg.push_str(&format!(
             r#"<text x="20" y="{}" class="diagram-title">Packet: {}</text>"#,
@@ -14,7 +12,7 @@ pub fn render_packets(_project: &Project, _svg: &mut String, _y_offset: &mut f32
         let packet_height = 50.0;
 
         for field in &packet.fields {
-            let field_width = 120.0;
+            let field_width = 120.0; // In a full impl this would be derived from field.range
 
             svg.push_str(&format!(
                 "<rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" rx=\"0\" class=\"node\" fill=\"#e3f2fd\" />",
@@ -40,5 +38,4 @@ pub fn render_packets(_project: &Project, _svg: &mut String, _y_offset: &mut f32
 
         *y_offset += 100.0;
     }
-    */
 }

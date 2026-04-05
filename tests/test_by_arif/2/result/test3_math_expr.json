@@ -1,0 +1,73 @@
+{
+  "diagrams": [
+    {
+      "name": "MathNode",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "main",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 186.28746,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "C",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "width": {
+                    "BinaryOp": [
+                      {
+                        "String": "base"
+                      },
+                      "*",
+                      {
+                        "String": "3"
+                      }
+                    ]
+                  },
+                  "height": {
+                    "BinaryOp": [
+                      {
+                        "String": "base"
+                      },
+                      "+",
+                      {
+                        "String": "20"
+                      }
+                    ]
+                  }
+                },
+                "attributes": {},
+                "x": 213.71254,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": []
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "variables": {
+    "base": {
+      "String": "50\n\n"
+    }
+  }
+}

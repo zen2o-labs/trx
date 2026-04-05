@@ -1,0 +1,98 @@
+{
+  "diagrams": [
+    {
+      "name": "Architecture Overview",
+      "root": {
+        "id": "root",
+        "nodes": [
+          {
+            "id": "NodeA",
+            "label": null,
+            "kind": "Box",
+            "properties": {
+              "padding": {
+                "BinaryOp": [
+                  {
+                    "String": "base_padding"
+                  },
+                  "*",
+                  {
+                    "String": "2"
+                  }
+                ]
+              }
+            },
+            "attributes": {
+              "shape": "hexagon"
+            },
+            "x": 186.28746,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "NodeB",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "shape": "cylinder"
+            },
+            "x": 213.71254,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          }
+        ],
+        "layers": []
+      },
+      "connections": [
+        {
+          "from": "NodeA ",
+          "to": "NodeB ",
+          "arrow": "->",
+          "label": "TCP_Header",
+          "attributes": {}
+        }
+      ],
+      "scenario": null
+    }
+  ],
+  "packets": [
+    {
+      "name": "TCP_Header",
+      "size": "32 bits",
+      "fields": [
+        {
+          "range": "0..15",
+          "name": "src_port",
+          "field_type": "type: u16"
+        },
+        {
+          "range": "16..31",
+          "name": "dst_port",
+          "field_type": "type: u16"
+        }
+      ],
+      "constraint": null
+    }
+  ],
+  "states": [],
+  "xys": [
+    {
+      "name": "Telemetry",
+      "x_axis": "Time",
+      "y_axis": "CPU",
+      "data": "@prometheus::cpu_usage"
+    }
+  ],
+  "sqltables": [],
+  "variables": {
+    "base_padding": {
+      "String": "10\n"
+    },
+    "bg_color": {
+      "String": "\"#f8fafc\"\n\n"
+    }
+  }
+}

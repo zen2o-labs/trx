@@ -1,0 +1,104 @@
+{
+  "diagrams": [
+    {
+      "name": "State Machine Scenario Test",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": []
+      },
+      "connections": [],
+      "scenario": null
+    },
+    {
+      "name": "The main diagram filters out error states",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": []
+      },
+      "connections": [],
+      "scenario": null
+    },
+    {
+      "name": "Happy Path Flow",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": []
+      },
+      "connections": [
+        {
+          "from": "Start ",
+          "to": "Pending\n",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "Pending ",
+          "to": "Processing\n",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "Processing ",
+          "to": "Success\n",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        },
+        {
+          "from": "Success ",
+          "to": "End\n",
+          "arrow": "->",
+          "label": null,
+          "attributes": {}
+        }
+      ],
+      "scenario": null
+    }
+  ],
+  "packets": [],
+  "states": [
+    {
+      "name": "PaymentProcess",
+      "transitions": [
+        {
+          "from": "[*]",
+          "to": "Pending",
+          "trigger": null
+        },
+        {
+          "from": "Pending",
+          "to": "Processing",
+          "trigger": "charge_card"
+        },
+        {
+          "from": "Processing",
+          "to": "Success",
+          "trigger": "payment_ok"
+        },
+        {
+          "from": "Processing",
+          "to": "Failed",
+          "trigger": "payment_declined"
+        },
+        {
+          "from": "Failed",
+          "to": "Pending",
+          "trigger": "retry"
+        },
+        {
+          "from": "Success",
+          "to": "[*]",
+          "trigger": null
+        }
+      ]
+    }
+  ],
+  "xys": [],
+  "sqltables": [],
+  "variables": {}
+}

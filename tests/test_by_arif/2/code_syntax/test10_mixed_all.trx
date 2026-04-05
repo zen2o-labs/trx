@@ -1,0 +1,9 @@
+let base = 20
+packet Protocol { 0..7: header }
+state FSM { IDLE -> BUSY : @start }
+xy Chart { x_axis: "X" y_axis: "Y" data: "D" }
+
+# Mixed
+layer main {
+    node App { width: base * 5 height: base * 2 }
+}

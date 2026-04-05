@@ -1,0 +1,5 @@
+state AuthState {
+    LOGGED_OUT -> LOGGING_IN : @clickLogin
+    LOGGING_IN -> LOGGED_IN : @success
+    LOGGING_IN -> LOGGED_OUT : @fail
+}

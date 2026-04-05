@@ -1,0 +1,6 @@
+packet IPv4 {
+    0..3: version
+    4..7: ihl
+    8..15: dscp
+    16..31: total_length
+}

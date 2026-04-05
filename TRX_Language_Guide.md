@@ -68,16 +68,53 @@ xy Name {
 
 ---
 
-## 5. Math & Logic
+## 5. SQL Schema Tables
+Visualize relational schemas directly.
+
+### Syntax
+```trx
+sqltable Users {
+    PK id: uuid
+    email: varchar(255)
+}
+
+sqltable Orders {
+    PK id: uuid
+    FK user_id: uuid -> Users
+    status: varchar(50)
+}
+```
+
+---
+
+## 6. Math, Logic & Scenarios
 TRX supports inline math for dynamic property assignment:
 ```trx
 let base_padding = 10
 node A { padding: base_padding * 2 }
 ```
 
+Filter complex diagrams down to a single scenario view using:
+```trx
+[scenario: "happy_path"]
+```
+
+---
+
+## 7. Primitives & Styling
+Nodes can be assigned complex geometric primitive shapes using the `shape` attribute via the `StyleBuffer`.
+
+**Available Shapes:** `circle`, `ellipse`, `diamond`, `hexagon`, `cloud`, `cylinder` / `database`, `parallelogram`, `triangle`, `rounded`, `box` (default).
+
+```trx
+# Hexagon geometry with a raw HEX fill pattern
+Gateway [shape: hexagon, fill: "#ff0000"] { width: 150 }
+```
+
 ---
 
 ## Technical Summary
-- **Mechanical Sympathy**: Memory layouts are designed to be cache-friendly.
-- **Glassmorphic Rendering**: The default visual style is neon-accented transparency.
-- **Universal Compilation**: One TRX file generates JSON, SVG, and HTML reports.
+- **Zero-Copy WebAssembly Bridge**: Memory layouts are designed to be cache-friendly, allowing direct pointer-based execution from the host JS environment.
+- **Glassmorphic & Flat Rendering**: Styles map to 4-byte RGBA arrays.
+- **Dual-Engine Layout**: Supports both Force-directed (mesh physics) and Layered/Sugiyama (workflow/topological) layouts.
+- **Universal Compilation**: One TRX file generates JSON, SVG, and Interactive Web (ARIA) reports automatically.

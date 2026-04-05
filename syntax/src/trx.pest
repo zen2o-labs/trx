@@ -1,7 +1,7 @@
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
 COMMENT    = _{ "//" ~ (!NEWLINE ~ ANY)* }
 
-file = { SOI ~ (diagram | packet_decl | state_decl | xy_decl)* ~ EOI }
+file = { SOI ~ (diagram | packet_decl | state_decl | xy_decl | sqltable_decl | variable_decl | style_decl)* ~ EOI }
 
 diagram = { "#" ~ WHITESPACE? ~ diagram_name ~ NEWLINE* ~ diagram_stmt* }
 diagram_name = @{ (!NEWLINE ~ ANY)+ }
@@ -18,13 +18,14 @@ statement = _{
     packet_decl |
     state_decl |
     xy_decl |
+    sqltable_decl |
     diagram_stmt
 }
 
 variable_decl = { "let" ~ identifier ~ "=" ~ math_expression }
 
 math_expression = { math_term ~ (WHITESPACE* ~ math_op ~ WHITESPACE* ~ math_term)* }
-math_term = { property_ref | number_with_unit | number | identifier }
+math_term = { property_ref | number_with_unit | number | identifier | string_literal | color_literal }
 property_ref = { identifier ~ ("." ~ identifier)+ }
 number_with_unit = @{ number ~ identifier }
 math_op = { "+" | "-" | "*" | "/" }
@@ -64,9 +65,16 @@ xy_prop = { identifier ~ ":" ~ (string_literal | metric_bind) }
 string_literal = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
 metric_bind = { "@" ~ (!(NEWLINE | "}") ~ ANY)* }
 
-reserved    = _{ "packet" | "state" | "xy" | "constraint" }
+sqltable_decl = { "sqltable" ~ identifier ~ "{" ~ sqltable_field* ~ "}" }
+sqltable_field = { pk_fk? ~ identifier ~ ":" ~ identifier ~ ("->" ~ identifier)? }
+pk_fk = { "PK" | "FK" }
+
+reserved    = _{ "packet" | "state" | "xy" | "constraint" | "sqltable" }
 identifier  = @{ !reserved ~ (ASCII_ALPHANUMERIC | "_")+ }
 label       = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
 attributes  = { attribute_kv ~ ("," ~ attribute_kv)* }
-attribute_kv = { identifier ~ (":" ~ WHITESPACE* ~ identifier)? }
+attribute_kv = { identifier ~ (":" ~ WHITESPACE* ~ string_literal_or_id)? }
+string_literal_or_id = { string_literal | identifier | color_literal }
+color_literal = @{ "#" ~ ASCII_HEX_DIGIT+ }
 style_props = { (!"}" ~ ANY)* }
+

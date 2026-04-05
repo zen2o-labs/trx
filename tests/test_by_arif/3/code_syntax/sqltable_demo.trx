@@ -1,0 +1,28 @@
+sqltable Users {
+    PK id: uuid
+    email: varchar
+    password_hash: varchar
+    created_at: timestamp
+}
+
+sqltable Orders {
+    PK id: uuid
+    FK user_id: uuid -> Users
+    status: varchar
+    total: numeric
+    created_at: timestamp
+}
+
+sqltable Products {
+    PK id: uuid
+    name: varchar
+    price: numeric
+    stock: int
+}
+
+sqltable OrderItems {
+    PK id: uuid
+    FK order_id: uuid -> Orders
+    FK product_id: uuid -> Products
+    quantity: int
+}

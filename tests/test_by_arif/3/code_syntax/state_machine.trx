@@ -1,0 +1,17 @@
+# State Machine Scenario Test
+
+state PaymentProcess {
+    [*] -> Pending
+    Pending -> Processing : @charge_card
+    Processing -> Success : @payment_ok
+    Processing -> Failed : @payment_declined
+    Failed -> Pending : @retry
+    Success -> [*]
+}
+
+# The main diagram filters out error states
+# Happy Path Flow
+Start -> Pending
+Pending -> Processing
+Processing -> Success
+Success -> End

@@ -2,23 +2,26 @@ use crate::ast::Project;
 
 mod diagram;
 mod packet;
+mod sqltable;
 mod state;
 mod xy;
 
 pub fn render_svg(project: &Project) -> String {
-    let mut svg = String::from(r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000">"#);
-    
+    let mut svg = String::from(r#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 3000">"#);
+
     svg.push_str("<style>
-        .node { fill: #fff; stroke: #333; stroke-width: 2; }
-        .connection { stroke: #999; stroke-width: 2; fill: none; }
-        .label { font-family: sans-serif; font-size: 12px; fill: #333; }
-        .diagram-title { font-family: sans-serif; font-size: 18px; font-weight: bold; fill: #000; }
+        .node { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+        .connection { stroke: #64748b; stroke-width: 2; fill: none; }
+        .label { font-family: Inter, sans-serif; font-size: 13px; fill: #1e293b; }
+        .conn-label { font-family: Inter, sans-serif; font-size: 11px; fill: #64748b; }
+        .diagram-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
     </style>");
 
     let mut y_offset = 50.0;
 
     diagram::render_diagrams(&project.diagrams, &mut svg, &mut y_offset);
     packet::render_packets(project, &mut svg, &mut y_offset);
+    sqltable::render_sqltables(project, &mut svg, &mut y_offset);
     state::render_states(project, &mut svg, &mut y_offset);
     xy::render_xys(project, &mut svg, &mut y_offset);
 

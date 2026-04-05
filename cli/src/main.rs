@@ -2,10 +2,12 @@ use std::env;
 use std::fs;
 use std::path::Path;
 use trx_engine::parser::parse;
+use trx_engine::evaluator::evaluate_project;
+use trx_engine::render::svg::render_svg;
 use trx_layout::apply_layout;
 use std::io::{self, Write};
 
-const LOGO: &[u8] = include_bytes!("../../../assets/logo.txt");
+const LOGO: &[u8] = include_bytes!("../../assets/TextTRX.txt");
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut stdout = io::stdout().lock();
@@ -14,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let args: Vec<String> = env::args().collect();
     if args.len() < 4 || args[1] != "compile" {
-        eprintln!("Usage: trx compile <input.trx> <output.json>");
+        eprintln!("Usage: trx compile <input.trx> <output.json|svg>");
         std::process::exit(1);
     }
 
@@ -33,12 +35,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut project = parse(&input).map_err(|e| e)?;
     println!("Found {} diagrams.", project.diagrams.len());
 
+    println!("Evaluating math expressions...");
+    evaluate_project(&mut project);
+
     println!("Calculating layouts...");
     apply_layout(&mut project);
 
-    let json_output = serde_json::to_string_pretty(&project)?;
-    fs::write(output_path, json_output)?;
-    println!("Generated JSON: {}", output_path);
+    if output_path.ends_with(".svg") {
+        let svg_output = render_svg(&project);
+        fs::write(output_path, svg_output)?;
+        println!("Generated SVG: {}", output_path);
+    } else {
+        let json_output = serde_json::to_string_pretty(&project)?;
+        fs::write(output_path, json_output)?;
+        println!("Generated JSON: {}", output_path);
+    }
 
     println!("Success!");
     Ok(())
