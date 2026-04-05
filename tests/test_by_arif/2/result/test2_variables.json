@@ -1,0 +1,60 @@
+{
+  "diagrams": [
+    {
+      "name": "VariablesNode",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "main",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 186.28746,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "B",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "width": {
+                    "String": "p_width"
+                  },
+                  "height": {
+                    "String": "p_height"
+                  }
+                },
+                "attributes": {},
+                "x": 213.71254,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": []
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "variables": {
+    "p_width": {
+      "String": "150\n"
+    },
+    "p_height": {
+      "String": "80\n\n"
+    }
+  }
+}

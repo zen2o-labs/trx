@@ -71,4 +71,8 @@ pub enum ShapeKind {
     Vault,
     Gear,
     Certificate,
+
+    // Schema & Data
+    SqlTable,
+    Package,
 }

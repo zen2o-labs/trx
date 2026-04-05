@@ -1,0 +1,148 @@
+{
+  "diagrams": [],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "sqltables": [
+    {
+      "name": "Users",
+      "fields": [
+        {
+          "name": "id",
+          "field_type": "uuid",
+          "is_pk": true,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "email",
+          "field_type": "varchar",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "password_hash",
+          "field_type": "varchar",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "created_at",
+          "field_type": "timestamp",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "fields": [
+        {
+          "name": "id",
+          "field_type": "uuid",
+          "is_pk": true,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "user_id",
+          "field_type": "uuid",
+          "is_pk": false,
+          "is_fk": true,
+          "fk_ref": "Users"
+        },
+        {
+          "name": "status",
+          "field_type": "varchar",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "total",
+          "field_type": "numeric",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "created_at",
+          "field_type": "timestamp",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "fields": [
+        {
+          "name": "id",
+          "field_type": "uuid",
+          "is_pk": true,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "name",
+          "field_type": "varchar",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "price",
+          "field_type": "numeric",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "stock",
+          "field_type": "int",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        }
+      ]
+    },
+    {
+      "name": "OrderItems",
+      "fields": [
+        {
+          "name": "id",
+          "field_type": "uuid",
+          "is_pk": true,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "order_id",
+          "field_type": "uuid",
+          "is_pk": false,
+          "is_fk": true,
+          "fk_ref": "Orders"
+        },
+        {
+          "name": "product_id",
+          "field_type": "uuid",
+          "is_pk": false,
+          "is_fk": true,
+          "fk_ref": "Products"
+        },
+        {
+          "name": "quantity",
+          "field_type": "int",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        }
+      ]
+    }
+  ],
+  "variables": {}
+}

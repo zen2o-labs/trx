@@ -1,5 +1,6 @@
 pub mod element;
 pub mod style;
+pub mod style_buffer;
 
 pub use crate::ast::element::{ShapeKind, Id};
 
@@ -9,6 +10,63 @@ use std::collections::HashMap;
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct Project {
     pub diagrams: Vec<NamedDiagram>,
+    pub packets: Vec<PacketDeclaration>,
+    pub states: Vec<StateDeclaration>,
+    pub xys: Vec<XyDeclaration>,
+    pub sqltables: Vec<SqlTableDeclaration>,
+    pub variables: HashMap<String, Expression>,
+}
+
+/// Milestone 04 — Schema Visualization
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SqlField {
+    pub name: String,
+    pub field_type: String,
+    pub is_pk: bool,
+    pub is_fk: bool,
+    pub fk_ref: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SqlTableDeclaration {
+    pub name: String,
+    pub fields: Vec<SqlField>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PacketField {
+    pub range: String,
+    pub name: String,
+    pub field_type: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PacketDeclaration {
+    pub name: String,
+    pub size: String,
+    pub fields: Vec<PacketField>,
+    pub constraint: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StateTransition {
+    pub from: String,
+    pub to: String,
+    pub trigger: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StateDeclaration {
+    pub name: String,
+    pub transitions: Vec<StateTransition>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct XyDeclaration {
+    pub name: String,
+    pub x_axis: String,
+    pub y_axis: String,
+    pub data: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -16,6 +74,8 @@ pub struct NamedDiagram {
     pub name: String,
     pub root: Layer,
     pub connections: Vec<Connection>,
+    /// Milestone 08 — Scenario State Management
+    pub scenario: Option<String>,
 }
 
 impl NamedDiagram {
@@ -28,6 +88,7 @@ impl NamedDiagram {
                 layers: Vec::new(),
             },
             connections: Vec::new(),
+            scenario: None,
         }
     }
 }
@@ -46,8 +107,8 @@ pub struct Node {
     pub kind: ShapeKind,
     pub properties: HashMap<String, Expression>,
     pub attributes: HashMap<String, String>,
-    
-    // Layout computed properties
+
+    // Layout compute properties
     pub x: f32,
     pub y: f32,
     pub width: f32,

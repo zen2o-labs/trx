@@ -1,0 +1,40 @@
+let base_padding = 20
+let component_width = base_padding * 6
+let diagram_scale = 1.5
+
+packet TCPHeader [160 bits] {
+    0..15: source_port
+    16..31: dest_port
+    32..63: seq_num
+    64..95: ack_num
+    96..159: flags_and_window
+    constraint: "Must be valid TCP"
+}
+
+state ConnectionState {
+    CLOSED -> SYN_SENT : @connect
+    SYN_SENT -> ESTABLISHED : @syn_ack
+    ESTABLISHED -> FIN_WAIT : @close
+}
+
+xy ResponseTime {
+    x_axis: "Time (s)"
+    y_axis: "Latency (ms)"
+    data: @log.latency
+}
+
+# NetworkFlow
+layer network {
+    node client [color: blue] {
+        width: component_width
+        height: 80
+    }
+    
+    node server [color: red] {
+        width: component_width * diagram_scale
+        height: 120
+    }
+    
+    client -- [color: green] -> server : "SYN"
+    server == [color: blue] >> client : "SYN-ACK"
+}

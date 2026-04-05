@@ -1,0 +1,129 @@
+{
+  "diagrams": [
+    {
+      "name": "CI/CD Pipeline",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": []
+      },
+      "connections": [],
+      "scenario": null
+    },
+    {
+      "name": "This tests the Layered (Sugiyama) layout where nodes should naturally flow left-to-right or top-to-bottom",
+      "root": {
+        "id": "root",
+        "nodes": [
+          {
+            "id": "Commit",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "fill": "\"#e2e8f0\"",
+              "shape": "package"
+            },
+            "x": 226.2324,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Build",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "fill": "\"#38bdf8\"",
+              "shape": "gear"
+            },
+            "x": 340.59875,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Test",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "shape": "shield",
+              "fill": "\"#10b981\""
+            },
+            "x": 500.0,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Package",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "fill": "\"#f59e0b\"",
+              "shape": "container"
+            },
+            "x": 659.40094,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          },
+          {
+            "id": "Deploy",
+            "label": null,
+            "kind": "Box",
+            "properties": {},
+            "attributes": {
+              "shape": "cloud",
+              "fill": "\"#a855f7\""
+            },
+            "x": 773.7676,
+            "y": 100.0,
+            "width": 120.0,
+            "height": 60.0
+          }
+        ],
+        "layers": []
+      },
+      "connections": [
+        {
+          "from": "Commit ",
+          "to": "Build ",
+          "arrow": "->",
+          "label": "trigger",
+          "attributes": {}
+        },
+        {
+          "from": "Build ",
+          "to": "Test ",
+          "arrow": "->",
+          "label": "artifacts",
+          "attributes": {}
+        },
+        {
+          "from": "Test ",
+          "to": "Package ",
+          "arrow": "->",
+          "label": "success",
+          "attributes": {}
+        },
+        {
+          "from": "Package ",
+          "to": "Deploy ",
+          "arrow": "->",
+          "label": "image",
+          "attributes": {}
+        }
+      ],
+      "scenario": null
+    }
+  ],
+  "packets": [],
+  "states": [],
+  "xys": [],
+  "sqltables": [],
+  "variables": {}
+}

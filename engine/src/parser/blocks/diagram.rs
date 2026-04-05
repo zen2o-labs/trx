@@ -141,8 +141,38 @@ fn parse_connection(pair: TrxPair) -> Result<Connection, ParseError> {
 }
 
 fn parse_expression(pair: TrxPair) -> Result<Expression, ParseError> {
-    // A simplified math expression parser mapping pest tree to Expression AST.
-    // parse simple numbers to pass basic JSON outputs.
-    let s = pair.as_str().to_string();
-    Ok(Expression::String(s))
+    let mut inner = pair.into_inner();
+    let first = inner.next().unwrap();
+    let mut expr = parse_math_term(first)?;
+
+    while let Some(op_pair) = inner.next() {
+        let op = op_pair.as_str().trim().to_string();
+        if let Some(right_pair) = inner.next() {
+            let right = parse_math_term(right_pair)?;
+            expr = Expression::BinaryOp(Box::new(expr), op, Box::new(right));
+        }
+    }
+    Ok(expr)
+}
+
+fn parse_math_term(pair: TrxPair) -> Result<Expression, ParseError> {
+    match pair.as_rule() {
+        Rule::number => {
+            let n = pair.as_str().parse::<f64>().unwrap_or(0.0);
+            Ok(Expression::Number(n))
+        }
+        Rule::number_with_unit => {
+            let s = pair.as_str();
+            let num_str: String = s.chars().take_while(|c| c.is_numeric() || *c == '.').collect();
+            let unit: String = s.chars().skip_while(|c| c.is_numeric() || *c == '.').collect();
+            let n = num_str.parse::<f64>().unwrap_or(0.0);
+            Ok(Expression::Unit(n, unit))
+        }
+        Rule::identifier => {
+            Ok(Expression::VariableRef(pair.as_str().to_string()))
+        }
+        _ => {
+            Ok(Expression::String(pair.as_str().to_string()))
+        }
+    }
 }

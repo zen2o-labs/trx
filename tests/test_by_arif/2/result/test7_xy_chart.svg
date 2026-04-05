@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000"><style>
+        .node { fill: #fff; stroke: #333; stroke-width: 2; }
+        .connection { stroke: #999; stroke-width: 2; fill: none; }
+        .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+        .diagram-title { font-family: sans-serif; font-size: 18px; font-weight: bold; fill: #000; }
+    </style><text x="20" y="50" class="diagram-title">XY Chart: Performance</text><line x1="50" y1="280" x2="450" y2="280" stroke="#333" stroke-width="2" /><line x1="50" y1="280" x2="50" y2="80" stroke="#333" stroke-width="2" /><text x="250" y="300" text-anchor="middle" font-size="12px">Time</text><text x="50" y="180" text-anchor="middle" font-size="12px" transform="rotate(-90 50 180)" dy="-30">CPU Usage</text><text x="70" y="100" font-size="12px" fill="#1976d2">Data Source: Server CPU</text><polyline points="50 280 150 230 250 160 350 200" fill="none" stroke="#e91e63" stroke-width="3" /></svg>

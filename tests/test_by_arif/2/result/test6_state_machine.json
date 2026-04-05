@@ -1,0 +1,28 @@
+{
+  "diagrams": [],
+  "packets": [],
+  "states": [
+    {
+      "name": "AuthState",
+      "transitions": [
+        {
+          "from": "LOGGED_OUT",
+          "to": "LOGGING_IN",
+          "trigger": "clickLogin"
+        },
+        {
+          "from": "LOGGING_IN",
+          "to": "LOGGED_IN",
+          "trigger": "success"
+        },
+        {
+          "from": "LOGGING_IN",
+          "to": "LOGGED_OUT",
+          "trigger": "fail"
+        }
+      ]
+    }
+  ],
+  "xys": [],
+  "variables": {}
+}

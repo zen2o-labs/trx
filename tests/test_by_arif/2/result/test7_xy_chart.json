@@ -1,0 +1,14 @@
+{
+  "diagrams": [],
+  "packets": [],
+  "states": [],
+  "xys": [
+    {
+      "name": "Performance",
+      "x_axis": "Time",
+      "y_axis": "CPU Usage",
+      "data": "Server CPU"
+    }
+  ],
+  "variables": {}
+}

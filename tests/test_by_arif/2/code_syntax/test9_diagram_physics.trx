@@ -1,0 +1,12 @@
+# PhysicsTest
+layer cluster {
+    node n1 {}
+    node n2 {}
+    node n3 {}
+    node n4 {}
+
+    n1 == n2
+    n2 -> n3
+    n3 >> n4
+    n4 -> n1
+}

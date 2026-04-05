@@ -1,0 +1,10 @@
+let p_width = 150
+let p_height = 80
+
+# VariablesNode
+layer main {
+    node B {
+        width: p_width
+        height: p_height
+    }
+}

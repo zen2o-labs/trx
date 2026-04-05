@@ -1,0 +1,8 @@
+packet TCPHeader [160 bits] {
+    0..15: source_port
+    16..31: dest_port
+    32..63: seq_num
+    64..95: ack_num
+    96..159: flags
+    constraint: "Valid TCP"
+}

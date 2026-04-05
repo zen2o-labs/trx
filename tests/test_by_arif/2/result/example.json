@@ -1,0 +1,184 @@
+{
+  "diagrams": [
+    {
+      "name": "NetworkFlow",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "network",
+            "nodes": [
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 214.33815,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "client",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "height": {
+                    "String": "80"
+                  },
+                  "width": {
+                    "String": "component_width"
+                  }
+                },
+                "attributes": {
+                  "color": "blue"
+                },
+                "x": 323.78482,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "node",
+                "label": null,
+                "kind": "Box",
+                "properties": {},
+                "attributes": {},
+                "x": 476.21524,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              },
+              {
+                "id": "server",
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "height": {
+                    "String": "120"
+                  },
+                  "width": {
+                    "BinaryOp": [
+                      {
+                        "String": "component_width"
+                      },
+                      "*",
+                      {
+                        "String": "diagram_scale"
+                      }
+                    ]
+                  }
+                },
+                "attributes": {
+                  "color": "red"
+                },
+                "x": 585.6616,
+                "y": 100.0,
+                "width": 120.0,
+                "height": 60.0
+              }
+            ],
+            "layers": []
+          }
+        ]
+      },
+      "connections": [
+        {
+          "from": "client ",
+          "to": "server ",
+          "arrow": "-- [color: green] ->",
+          "label": "SYN",
+          "attributes": {
+            "color": "green"
+          }
+        },
+        {
+          "from": "server ",
+          "to": "client ",
+          "arrow": "== [color: blue] >>",
+          "label": "SYN-ACK",
+          "attributes": {
+            "color": "blue"
+          }
+        }
+      ]
+    }
+  ],
+  "packets": [
+    {
+      "name": "TCPHeader",
+      "size": "160 bits",
+      "fields": [
+        {
+          "range": "0..15",
+          "name": "source_port",
+          "field_type": ""
+        },
+        {
+          "range": "16..31",
+          "name": "dest_port",
+          "field_type": ""
+        },
+        {
+          "range": "32..63",
+          "name": "seq_num",
+          "field_type": ""
+        },
+        {
+          "range": "64..95",
+          "name": "ack_num",
+          "field_type": ""
+        },
+        {
+          "range": "96..159",
+          "name": "flags_and_window",
+          "field_type": ""
+        }
+      ],
+      "constraint": "\"Must be valid TCP\""
+    }
+  ],
+  "states": [
+    {
+      "name": "ConnectionState",
+      "transitions": [
+        {
+          "from": "CLOSED",
+          "to": "SYN_SENT",
+          "trigger": "connect"
+        },
+        {
+          "from": "SYN_SENT",
+          "to": "ESTABLISHED",
+          "trigger": "syn_ack"
+        },
+        {
+          "from": "ESTABLISHED",
+          "to": "FIN_WAIT",
+          "trigger": "close"
+        }
+      ]
+    }
+  ],
+  "xys": [
+    {
+      "name": "ResponseTime",
+      "x_axis": "Time (s)",
+      "y_axis": "Latency (ms)",
+      "data": "@log.latency"
+    }
+  ],
+  "variables": {
+    "diagram_scale": {
+      "String": "1.5\n\n"
+    },
+    "base_padding": {
+      "String": "20\n"
+    },
+    "component_width": {
+      "String": "base_padding * 6"
+    }
+  }
+}

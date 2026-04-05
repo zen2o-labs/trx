@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000"><style>
+        .node { fill: #fff; stroke: #333; stroke-width: 2; }
+        .connection { stroke: #999; stroke-width: 2; fill: none; }
+        .label { font-family: sans-serif; font-size: 12px; fill: #333; }
+        .diagram-title { font-family: sans-serif; font-size: 18px; font-weight: bold; fill: #000; }
+    </style><text x="20" y="50" class="diagram-title">BasicNode</text><rect x="186.28746" y="180" width="120" height="60" rx="5" class="node" /><text x="246.28746" y="215" text-anchor="middle" class="label">node</text><rect x="213.71254" y="180" width="120" height="60" rx="5" class="node" /><text x="273.71252" y="215" text-anchor="middle" class="label">A</text></svg>

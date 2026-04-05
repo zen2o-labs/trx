@@ -1,0 +1,40 @@
+{
+  "diagrams": [],
+  "packets": [
+    {
+      "name": "TCPHeader",
+      "size": "160 bits",
+      "fields": [
+        {
+          "range": "0..15",
+          "name": "source_port",
+          "field_type": ""
+        },
+        {
+          "range": "16..31",
+          "name": "dest_port",
+          "field_type": ""
+        },
+        {
+          "range": "32..63",
+          "name": "seq_num",
+          "field_type": ""
+        },
+        {
+          "range": "64..95",
+          "name": "ack_num",
+          "field_type": ""
+        },
+        {
+          "range": "96..159",
+          "name": "flags",
+          "field_type": ""
+        }
+      ],
+      "constraint": "\"Valid TCP\""
+    }
+  ],
+  "states": [],
+  "xys": [],
+  "variables": {}
+}

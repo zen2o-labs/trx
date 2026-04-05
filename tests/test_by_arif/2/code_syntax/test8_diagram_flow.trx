@@ -1,0 +1,7 @@
+# DiagramFlow
+layer net {
+    node client {}
+    node server {}
+    client -> server : "request"
+    server >> client : "async_reply"
+}
