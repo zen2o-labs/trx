@@ -13,8 +13,10 @@ Diagrams are the primary way to define architectures and networks.
 
 ### Syntax
 ```trx
+include "other_file.trx"
+
 # Diagram Name
-[node] identifier [Label] { properties }
+[node] identifier [(class: .classname)] [Label] { properties }
 src -> dst : "Connection Label"
 ```
 
@@ -87,11 +89,25 @@ sqltable Orders {
 
 ---
 
-## 6. Math, Logic & Scenarios
-TRX supports inline math for dynamic property assignment:
+## 6. Math, Logic & Expressions
+TRX supports powerful inline expressions for dynamic property assignment:
+
+### Mathematical Functions
+Full support for standard mathematical evaluations:
+* `Math.sin(x)`, `Math.cos(x)`
+* `Math.abs(x)`, `Math.round(x)`
+* **Unary Negation**: `-50`, `-(variable * 2)`
+
+### Logical Comparators
+Evaluate boolean properties or constraints:
+* Operators: `==`, `!=`, `<`, `>`, `<=`, `>=`
+* Evaluates to `1.0` (True) or `0.0` (False) for use in layout calculations.
+
+### Variables
 ```trx
 let base_padding = 10
-node A { padding: base_padding * 2 }
+node A { padding: Math.abs(-base_padding) * 2 }
+node B { visible: base_padding > 5 }
 ```
 
 Filter complex diagrams down to a single scenario view using:
@@ -101,7 +117,26 @@ Filter complex diagrams down to a single scenario view using:
 
 ---
 
-## 7. Primitives & Styling
+## 7. Styles & Classes (CSS-like)
+TRX implements a global styling system to reduce duplication and enable theme-ability.
+
+### Defining Classes
+```trx
+style .premium {
+    fill: #d4af37;
+    stroke: #000000;
+}
+```
+
+### Applying Classes
+Nodes can inherit from one class. Inline attributes always override class defaults.
+```trx
+node MySystem (class: .premium) { width: 200 }
+```
+
+---
+
+## 8. Primitives & Styling
 Nodes can be assigned complex geometric primitive shapes using the `shape` attribute via the `StyleBuffer`.
 
 **Available Shapes:** `circle`, `ellipse`, `diamond`, `hexagon`, `cloud`, `cylinder` / `database`, `parallelogram`, `triangle`, `rounded`, `box` (default).

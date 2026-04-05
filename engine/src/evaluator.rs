@@ -35,6 +35,13 @@ impl EvaluationContext {
     fn eval(&self, expr: &Expression) -> Option<f64> {
         match expr {
             Expression::Number(n) => Some(*n),
+            Expression::Boolean(b) => {
+                if *b {
+                    Some(1.0)
+                } else {
+                    Some(0.0)
+                }
+            }
             Expression::Unit(n, _) => Some(*n),
             Expression::VariableRef(v) => self.variables.get(v).copied(),
             Expression::BinaryOp(left, op, right) => {
@@ -51,7 +58,73 @@ impl EvaluationContext {
                             None
                         }
                     }
+                    "==" => {
+                        if l == r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
+                    "!=" => {
+                        if l != r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
+                    "<" => {
+                        if l < r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
+                    ">" => {
+                        if l > r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
+                    "<=" => {
+                        if l <= r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
+                    ">=" => {
+                        if l >= r {
+                            Some(1.0)
+                        } else {
+                            Some(0.0)
+                        }
+                    }
                     _ => None,
+                }
+            }
+            Expression::UnaryOp(op, inner) => {
+                let val = self.eval(inner)?;
+                match op.as_str() {
+                    "-" => Some(-val),
+                    _ => None,
+                }
+            }
+            Expression::FunctionCall { name, args } => {
+                let mut evaluated_args = Vec::new();
+                for a in args {
+                    evaluated_args.push(self.eval(a)?);
+                }
+                if name == "Math.sin" && evaluated_args.len() == 1 {
+                    Some(evaluated_args[0].sin())
+                } else if name == "Math.cos" && evaluated_args.len() == 1 {
+                    Some(evaluated_args[0].cos())
+                } else if name == "Math.round" && evaluated_args.len() == 1 {
+                    Some(evaluated_args[0].round())
+                } else if name == "Math.abs" && evaluated_args.len() == 1 {
+                    Some(evaluated_args[0].abs())
+                } else {
+                    None
                 }
             }
             _ => None,

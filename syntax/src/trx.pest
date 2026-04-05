@@ -25,10 +25,11 @@ statement = _{
 variable_decl = { "let" ~ identifier ~ "=" ~ math_expression }
 
 math_expression = { math_term ~ (WHITESPACE* ~ math_op ~ WHITESPACE* ~ math_term)* }
-math_term = { property_ref | number_with_unit | number | identifier | string_literal | color_literal }
+function_call = { (identifier ~ ("." ~ identifier)*) ~ "(" ~ (math_expression ~ ("," ~ math_expression)*)? ~ ")" }
+math_term = { "-"? ~ (function_call | property_ref | number_with_unit | number | identifier | string_literal | color_literal) }
 property_ref = { identifier ~ ("." ~ identifier)+ }
 number_with_unit = @{ number ~ identifier }
-math_op = { "+" | "-" | "*" | "/" }
+math_op = { "==" | "!=" | "<=" | ">=" | "<" | ">" | "+" | "-" | "*" | "/" }
 number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
 
 property_assignment = { identifier ~ ":" ~ math_expression }
@@ -36,7 +37,7 @@ property_block = { "{" ~ (property_assignment ~ ("," | NEWLINE)*)* ~ "}" }
 
 layer_block = { "layer" ~ identifier ~ "{" ~ (diagram_stmt)* ~ "}" }
 
-node_decl = { ("node" ~ WHITESPACE+)? ~ identifier ~ ("[" ~ attributes ~ "]")? ~ (WHITESPACE* ~ property_block)? }
+node_decl = { ("node" ~ WHITESPACE+)? ~ identifier ~ ("(" ~ "class:" ~ "." ~ identifier ~ ")")? ~ ("[" ~ attributes ~ "]")? ~ (WHITESPACE* ~ property_block)? }
 
 node_ref = { identifier ~ ("." ~ identifier)* }
 connection = { node_ref ~ WHITESPACE* ~ connection_arrow ~ WHITESPACE* ~ node_ref ~ (":" ~ label)? }
@@ -45,7 +46,7 @@ attr_arrow = { ("==" | "--") ~ "[" ~ attributes ~ "]" ~ ("==" | "->" | ">>") }
 
 arrow = { ">>" | "->" | "==" }
 
-style_decl = { "." ~ identifier ~ "{" ~ style_props ~ "}" }
+style_decl = { "style" ~ "." ~ identifier ~ "{" ~ style_props ~ "}" }
 
 packet_decl = { "packet" ~ identifier ~ ("[" ~ packet_attrs ~ "]")? ~ "{" ~ packet_stmts ~ "}" }
 packet_attrs = { (!( "]" | "{" ) ~ ANY)* }

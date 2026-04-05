@@ -1,4 +1,3 @@
-/// Milestone 04 — Schema Visualization
 /// Renders `sqltable` declarations as SVG table diagrams with PK/FK indicators.
 use crate::ast::{Project, SqlTableDeclaration};
 
@@ -80,7 +79,11 @@ fn render_table(table: &SqlTableDeclaration, svg: &mut String, y: f32) {
         }
 
         // Field name
-        let text_x = if field.is_pk || field.is_fk { badge_x } else { x + 10.0 };
+        let text_x = if field.is_pk || field.is_fk {
+            badge_x
+        } else {
+            x + 10.0
+        };
         svg.push_str(&format!(
             "<text x=\"{}\" y=\"{}\" fill=\"#e2e8f0\" font-size=\"12\" font-family=\"monospace\">{}</text>",
             text_x,

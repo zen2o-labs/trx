@@ -1,4 +1,4 @@
-use crate::ast::{NamedDiagram, Layer, Node};
+use crate::ast::{Layer, NamedDiagram, Node};
 use kurbo::{Point, Rect};
 use std::collections::HashMap;
 
@@ -34,10 +34,18 @@ impl LayoutEngine for ForceLayout {
     }
 
     fn configure(&mut self, params: &HashMap<String, f64>) {
-        if let Some(&r) = params.get("repulsion") { self.repulsion = r; }
-        if let Some(&a) = params.get("attraction") { self.attraction = a; }
-        if let Some(&d) = params.get("damping") { self.damping = d; }
-        if let Some(&i) = params.get("iterations") { self.iterations = i as u32; }
+        if let Some(&r) = params.get("repulsion") {
+            self.repulsion = r;
+        }
+        if let Some(&a) = params.get("attraction") {
+            self.attraction = a;
+        }
+        if let Some(&d) = params.get("damping") {
+            self.damping = d;
+        }
+        if let Some(&i) = params.get("iterations") {
+            self.iterations = i as u32;
+        }
     }
 }
 
@@ -48,7 +56,9 @@ impl ForceLayout {
         }
 
         let n = layer.nodes.len();
-        if n == 0 { return; }
+        if n == 0 {
+            return;
+        }
 
         for _ in 0..self.iterations {
             let mut disp_x = vec![0.0; n];
@@ -76,11 +86,6 @@ impl ForceLayout {
     }
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Milestone 02 — Layered (Sugiyama-style) Layout Engine
-// ────────────────────────────────────────────────────────────────────────────
-
-/// A simple layered layout that assigns ranks via topological sort and
 /// places nodes in horizontal bands (layers / ranks).
 #[derive(Debug, Clone)]
 pub struct LayeredLayout {
@@ -171,19 +176,18 @@ impl LayoutEngine for LayeredLayout {
         // Apply positions to AST nodes
         apply_positions_to_layer(&mut diagram.root, &node_ids, &positions);
 
-        // Milestone 06 — Recursive Offsetting
         apply_recursive_offsets(&mut diagram.root, 0.0, 0.0);
     }
 
     fn configure(&mut self, params: &HashMap<String, f64>) {
-        if let Some(&g) = params.get("x_gap") { self.x_gap = g as f32; }
-        if let Some(&g) = params.get("y_gap") { self.y_gap = g as f32; }
+        if let Some(&g) = params.get("x_gap") {
+            self.x_gap = g as f32;
+        }
+        if let Some(&g) = params.get("y_gap") {
+            self.y_gap = g as f32;
+        }
     }
 }
-
-// ────────────────────────────────────────────────────────────────────────────
-// Milestone 06 — Recursive Offsetting helpers
-// ────────────────────────────────────────────────────────────────────────────
 
 /// Recursively offset child layer node coordinates by their parent's origin.
 pub fn apply_recursive_offsets(layer: &mut Layer, parent_x: f32, parent_y: f32) {
@@ -198,8 +202,6 @@ pub fn apply_recursive_offsets(layer: &mut Layer, parent_x: f32, parent_y: f32) 
         apply_recursive_offsets(child_layer, parent_x + cx, parent_y + cy);
     }
 }
-
-// ── helpers ──────────────────────────────────────────────────────────────────
 
 fn collect_all_node_ids(layer: &Layer) -> Vec<String> {
     let mut ids = Vec::new();

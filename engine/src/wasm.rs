@@ -5,7 +5,7 @@ use crate::render::svg::render_svg;
 use trx_layout::apply_layout;
 use wasm_bindgen::prelude::*;
 
-// ─── Milestone 08: Scenario-aware WasmProject ────────────────────────────────
+// ─── Milestone 08: Scenario-aware WasmProject ──────────────────────
 
 #[wasm_bindgen]
 pub struct WasmProject {
@@ -22,9 +22,9 @@ impl WasmProject {
 
         // Filter diagrams to the requested scenario if provided
         if let Some(ref s) = scenario {
-            project.diagrams.retain(|d| {
-                d.scenario.as_deref().map(|sc| sc == s).unwrap_or(true)
-            });
+            project
+                .diagrams
+                .retain(|d| d.scenario.as_deref().map(|sc| sc == s).unwrap_or(true));
         }
 
         evaluate_project(&mut project);
