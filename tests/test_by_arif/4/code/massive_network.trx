@@ -1,0 +1,261 @@
+style .server { fill: #1a73e8; stroke: #0d47a1; }
+style .client { fill: #34a853; stroke: #1b5e20; }
+style .router { fill: #fbbc04; stroke: #e65100; }
+style .backbone { stroke-width: 2; stroke: #ea4335; }
+
+# MassiveNetworkGraph
+node sys_1 (class: .router) { width: 70, height: 45 }
+node sys_2 (class: .server) { width: 80, height: 50 }
+node sys_3 (class: .client) { width: 90, height: 40 }
+node sys_4 (class: .client) { width: 100, height: 45 }
+node sys_5 (class: .client) { width: 60, height: 50 }
+node sys_6 (class: .server) { width: 70, height: 40 }
+node sys_7 (class: .client) { width: 80, height: 45 }
+node sys_8 (class: .server) { width: 90, height: 50 }
+node sys_9 (class: .router) { width: 100, height: 40 }
+node sys_10 (class: .router) { width: 60, height: 45 }
+node sys_11 (class: .client) { width: 70, height: 50 }
+node sys_12 (class: .client) { width: 80, height: 40 }
+node sys_13 (class: .client) { width: 90, height: 45 }
+node sys_14 (class: .client) { width: 100, height: 50 }
+node sys_15 (class: .client) { width: 60, height: 40 }
+node sys_16 (class: .router) { width: 70, height: 45 }
+node sys_17 (class: .client) { width: 80, height: 50 }
+node sys_18 (class: .server) { width: 90, height: 40 }
+node sys_19 (class: .server) { width: 100, height: 45 }
+node sys_20 (class: .server) { width: 60, height: 50 }
+node sys_21 (class: .client) { width: 70, height: 40 }
+node sys_22 (class: .server) { width: 80, height: 45 }
+node sys_23 (class: .server) { width: 90, height: 50 }
+node sys_24 (class: .router) { width: 100, height: 40 }
+node sys_25 (class: .router) { width: 60, height: 45 }
+node sys_26 (class: .server) { width: 70, height: 50 }
+node sys_27 (class: .router) { width: 80, height: 40 }
+node sys_28 (class: .server) { width: 90, height: 45 }
+node sys_29 (class: .server) { width: 100, height: 50 }
+node sys_30 (class: .server) { width: 60, height: 40 }
+node sys_31 (class: .server) { width: 70, height: 45 }
+node sys_32 (class: .router) { width: 80, height: 50 }
+node sys_33 (class: .client) { width: 90, height: 40 }
+node sys_34 (class: .router) { width: 100, height: 45 }
+node sys_35 (class: .client) { width: 60, height: 50 }
+node sys_36 (class: .router) { width: 70, height: 40 }
+node sys_37 (class: .client) { width: 80, height: 45 }
+node sys_38 (class: .router) { width: 90, height: 50 }
+node sys_39 (class: .client) { width: 100, height: 40 }
+node sys_40 (class: .server) { width: 60, height: 45 }
+node sys_41 (class: .server) { width: 70, height: 50 }
+node sys_42 (class: .router) { width: 80, height: 40 }
+node sys_43 (class: .router) { width: 90, height: 45 }
+node sys_44 (class: .client) { width: 100, height: 50 }
+node sys_45 (class: .router) { width: 60, height: 40 }
+node sys_46 (class: .server) { width: 70, height: 45 }
+node sys_47 (class: .server) { width: 80, height: 50 }
+node sys_48 (class: .client) { width: 90, height: 40 }
+node sys_49 (class: .router) { width: 100, height: 45 }
+node sys_50 (class: .client) { width: 60, height: 50 }
+node sys_51 (class: .client) { width: 70, height: 40 }
+node sys_52 (class: .client) { width: 80, height: 45 }
+node sys_53 (class: .router) { width: 90, height: 50 }
+node sys_54 (class: .router) { width: 100, height: 40 }
+node sys_55 (class: .router) { width: 60, height: 45 }
+node sys_56 (class: .client) { width: 70, height: 50 }
+node sys_57 (class: .client) { width: 80, height: 40 }
+node sys_58 (class: .client) { width: 90, height: 45 }
+node sys_59 (class: .server) { width: 100, height: 50 }
+node sys_60 (class: .client) { width: 60, height: 40 }
+node sys_61 (class: .client) { width: 70, height: 45 }
+node sys_62 (class: .server) { width: 80, height: 50 }
+node sys_63 (class: .client) { width: 90, height: 40 }
+node sys_64 (class: .client) { width: 100, height: 45 }
+node sys_65 (class: .router) { width: 60, height: 50 }
+node sys_66 (class: .router) { width: 70, height: 40 }
+node sys_67 (class: .router) { width: 80, height: 45 }
+node sys_68 (class: .client) { width: 90, height: 50 }
+node sys_69 (class: .router) { width: 100, height: 40 }
+node sys_70 (class: .client) { width: 60, height: 45 }
+node sys_71 (class: .server) { width: 70, height: 50 }
+node sys_72 (class: .router) { width: 80, height: 40 }
+node sys_73 (class: .router) { width: 90, height: 45 }
+node sys_74 (class: .server) { width: 100, height: 50 }
+node sys_75 (class: .client) { width: 60, height: 40 }
+node sys_76 (class: .server) { width: 70, height: 45 }
+node sys_77 (class: .client) { width: 80, height: 50 }
+node sys_78 (class: .server) { width: 90, height: 40 }
+node sys_79 (class: .server) { width: 100, height: 45 }
+node sys_80 (class: .server) { width: 60, height: 50 }
+node sys_81 (class: .client) { width: 70, height: 40 }
+node sys_82 (class: .router) { width: 80, height: 45 }
+node sys_83 (class: .router) { width: 90, height: 50 }
+node sys_84 (class: .client) { width: 100, height: 40 }
+node sys_85 (class: .client) { width: 60, height: 45 }
+node sys_86 (class: .server) { width: 70, height: 50 }
+node sys_87 (class: .client) { width: 80, height: 40 }
+node sys_88 (class: .router) { width: 90, height: 45 }
+node sys_89 (class: .router) { width: 100, height: 50 }
+node sys_90 (class: .server) { width: 60, height: 40 }
+node sys_91 (class: .server) { width: 70, height: 45 }
+node sys_92 (class: .server) { width: 80, height: 50 }
+node sys_93 (class: .router) { width: 90, height: 40 }
+node sys_94 (class: .server) { width: 100, height: 45 }
+node sys_95 (class: .router) { width: 60, height: 50 }
+node sys_96 (class: .server) { width: 70, height: 40 }
+node sys_97 (class: .server) { width: 80, height: 45 }
+node sys_98 (class: .client) { width: 90, height: 50 }
+node sys_99 (class: .client) { width: 100, height: 40 }
+node sys_100 (class: .server) { width: 60, height: 45 }
+
+sys_1 -> sys_61
+sys_2 -> sys_8
+sys_3 -> sys_66
+sys_3 -> sys_30
+sys_4 -> sys_81
+sys_4 -> sys_53
+sys_5 -> sys_14
+sys_6 -> sys_69
+sys_7 -> sys_96
+sys_8 -> sys_30
+sys_9 -> sys_90
+sys_9 -> sys_65
+sys_10 -> sys_54
+sys_10 -> sys_19
+sys_11 -> sys_15
+sys_11 -> sys_84
+sys_12 -> sys_18
+sys_13 -> sys_64
+sys_13 -> sys_86
+sys_14 -> sys_94
+sys_15 -> sys_49
+sys_15 -> sys_22
+sys_16 -> sys_58
+sys_17 -> sys_89
+sys_17 -> sys_87
+sys_18 -> sys_33
+sys_18 -> sys_73
+sys_19 -> sys_74
+sys_19 -> sys_82
+sys_20 -> sys_16
+sys_20 -> sys_53
+sys_21 -> sys_50
+sys_22 -> sys_53
+sys_22 -> sys_15
+sys_23 -> sys_8
+sys_23 -> sys_64
+sys_24 -> sys_40
+sys_24 -> sys_39
+sys_25 -> sys_92
+sys_25 -> sys_41
+sys_26 -> sys_65
+sys_26 -> sys_17
+sys_27 -> sys_92
+sys_27 -> sys_15
+sys_28 -> sys_75
+sys_29 -> sys_69
+sys_29 -> sys_22
+sys_30 -> sys_45
+sys_31 -> sys_45
+sys_31 -> sys_56
+sys_32 -> sys_83
+sys_33 -> sys_34
+sys_33 -> sys_100
+sys_34 -> sys_77
+sys_34 -> sys_82
+sys_35 -> sys_51
+sys_35 -> sys_52
+sys_36 -> sys_6
+sys_36 -> sys_54
+sys_37 -> sys_20
+sys_38 -> sys_68
+sys_38 -> sys_79
+sys_39 -> sys_52
+sys_39 -> sys_20
+sys_40 -> sys_24
+sys_41 -> sys_82
+sys_42 -> sys_98
+sys_42 -> sys_12
+sys_43 -> sys_66
+sys_43 -> sys_13
+sys_44 -> sys_36
+sys_45 -> sys_55
+sys_45 -> sys_21
+sys_46 -> sys_37
+sys_47 -> sys_62
+sys_48 -> sys_29
+sys_49 -> sys_76
+sys_49 -> sys_90
+sys_50 -> sys_20
+sys_51 -> sys_15
+sys_51 -> sys_56
+sys_52 -> sys_54
+sys_52 -> sys_66
+sys_53 -> sys_94
+sys_53 -> sys_64
+sys_54 -> sys_43
+sys_55 -> sys_33
+sys_56 -> sys_20
+sys_57 -> sys_21
+sys_58 -> sys_52
+sys_58 -> sys_35
+sys_59 -> sys_28
+sys_59 -> sys_52
+sys_60 -> sys_78
+sys_61 -> sys_40
+sys_62 -> sys_97
+sys_62 -> sys_58
+sys_63 -> sys_49
+sys_64 -> sys_65
+sys_64 -> sys_42
+sys_65 -> sys_22
+sys_66 -> sys_64
+sys_66 -> sys_24
+sys_67 -> sys_41
+sys_67 -> sys_85
+sys_68 -> sys_70
+sys_69 -> sys_44
+sys_69 -> sys_67
+sys_70 -> sys_23
+sys_71 -> sys_69
+sys_71 -> sys_1
+sys_72 -> sys_46
+sys_72 -> sys_82
+sys_73 -> sys_79
+sys_74 -> sys_62
+sys_74 -> sys_65
+sys_75 -> sys_6
+sys_76 -> sys_70
+sys_77 -> sys_7
+sys_77 -> sys_48
+sys_78 -> sys_18
+sys_78 -> sys_32
+sys_79 -> sys_36
+sys_79 -> sys_66
+sys_80 -> sys_77
+sys_81 -> sys_49
+sys_82 -> sys_37
+sys_82 -> sys_73
+sys_83 -> sys_52
+sys_83 -> sys_53
+sys_84 -> sys_76
+sys_85 -> sys_38
+sys_86 -> sys_35
+sys_87 -> sys_97
+sys_87 -> sys_63
+sys_88 -> sys_62
+sys_88 -> sys_43
+sys_89 -> sys_23
+sys_90 -> sys_71
+sys_90 -> sys_50
+sys_91 -> sys_45
+sys_91 -> sys_74
+sys_92 -> sys_34
+sys_93 -> sys_96
+sys_94 -> sys_61
+sys_95 -> sys_50
+sys_95 -> sys_60
+sys_96 -> sys_68
+sys_96 -> sys_24
+sys_97 -> sys_72
+sys_98 -> sys_94
+sys_99 -> sys_70
+sys_99 -> sys_87
+sys_100 -> sys_69

@@ -1,6 +1,3 @@
-/// Milestone 05 — Flat Style Buffer
-/// Maps CSS-like style property names to GPU-friendly RGBA byte arrays.
-/// This allows zero-copy transfer of style data to Wasm linear memory.
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Default)]

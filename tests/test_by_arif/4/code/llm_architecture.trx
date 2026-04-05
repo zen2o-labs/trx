@@ -1,0 +1,55 @@
+style .input { fill: #e3f2fd; stroke: #1565c0; }
+style .embed { fill: #f3e5f5; stroke: #6a1b9a; }
+style .attn { fill: #e8f5e9; stroke: #2e7d32; }
+style .ffn { fill: #fff3e0; stroke: #ef6c00; }
+style .norm { fill: #eceff1; stroke: #455a64; }
+style .out { fill: #ffebee; stroke: #c62828; }
+style .cache { fill: #fffde7; stroke: #fbc02d; }
+
+# LargeLanguageModelArchitecture
+
+layer InputProcessing {
+    node Prompt (class: .input) [ label: "User Prompt" ] { width: 220, height: 65 }
+    node Tokenizer (class: .input) { width: 150, height: Math.round(50.5) }
+    node Embeddings (class: .embed) [ label: "Text Embeddings" ] { width: 180, height: 60 }
+    node PositionalEncoding (class: .embed) [ label: "Positional Encoding" ] { width: Math.abs(200), height: 60 }
+    
+    Prompt -> Tokenizer : "Raw Text String"
+    Tokenizer -> Embeddings : "Tokens (IDs)"
+    Embeddings -> PositionalEncoding : "Dense Vectors"
+}
+
+layer TransformerBlock_N_Layers {
+    node LayerNorm1 (class: .norm) [ label: "Layer Normalization 1" ] { width: 200, height: 40 }
+    node SelfAttention (class: .attn) [ label: "Multi-Head Self Attention" ] { width: 250, height: Math.round(85.3) }
+    node KV_Cache (class: .cache) [ label: "Key-Value Cache" ] { width: 180, height: 90 }
+    node Add1 (class: .norm) [ label: "Add" ] { width: 60, height: 60 }
+    
+    node LayerNorm2 (class: .norm) [ label: "Layer Normalization 2" ] { width: 200, height: 40 }
+    node FFN (class: .ffn) [ label: "Feed-Forward Network" ] { width: 230, height: Math.abs(80) }
+    node Add2 (class: .norm) [ label: "Add" ] { width: 60, height: 60 }
+
+    PositionalEncoding -> LayerNorm1
+    LayerNorm1 -> SelfAttention : "Q, K, V Projections"
+    KV_Cache -> SelfAttention : "Past K, V Vectors"
+    SelfAttention -> Add1
+    PositionalEncoding -> Add1 : "Residual Stream"
+    
+    Add1 -> LayerNorm2
+    LayerNorm2 -> FFN
+    FFN -> Add2
+    Add1 -> Add2 : "Residual Stream"
+}
+
+layer OutputGeneration {
+    node LayerNormFinal (class: .norm) [ label: "Final Layer Norm" ] { width: 180, height: 40 }
+    node Logits (class: .out) [ label: "Linear (Logits)" ] { width: 180, height: 60 }
+    node Softmax (class: .out) { width: 120, height: 60 }
+    node NextToken (class: .out) [ label: "Next Token Output" ] { width: 220, height: 60 }
+    
+    Add2 -> LayerNormFinal
+    LayerNormFinal -> Logits
+    Logits -> Softmax : "Unscaled Probabilities"
+    Softmax -> NextToken : "Argmax / Sampler"
+    NextToken -> KV_Cache : "Auto-regressive context loop"
+}

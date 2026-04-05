@@ -1,20 +1,20 @@
-pub mod error;
 pub mod blocks;
+pub mod error;
 
 use crate::ast::{Expression, Project};
 use crate::parser::error::ParseError;
-use trx_syntax::{TrxParser, Rule};
 use pest::Parser;
+use trx_syntax::{Rule, TrxParser};
 
 use blocks::diagram::parse_single_diagram;
 use blocks::packet::parse_packet_decl;
+use blocks::sqltable::parse_sqltable_decl;
 use blocks::state::parse_state_decl;
 use blocks::xy::parse_xy_decl;
-use blocks::sqltable::parse_sqltable_decl;
 
 pub fn parse(input: &str) -> Result<Project, ParseError> {
-    let pairs = TrxParser::parse(Rule::file, input)
-        .map_err(|e| ParseError::PestError(e.to_string()))?;
+    let pairs =
+        TrxParser::parse(Rule::file, input).map_err(|e| ParseError::PestError(e.to_string()))?;
 
     let mut project = Project::default();
 
@@ -23,7 +23,9 @@ pub fn parse(input: &str) -> Result<Project, ParseError> {
             for inner_pair in pair.into_inner() {
                 match inner_pair.as_rule() {
                     Rule::diagram => {
-                        project.diagrams.push(parse_single_diagram(inner_pair)?);
+                        project
+                            .diagrams
+                            .push(parse_single_diagram(inner_pair, &mut project.classes)?);
                     }
                     Rule::packet_decl => {
                         project.packets.push(parse_packet_decl(inner_pair)?);
@@ -50,7 +52,10 @@ pub fn parse(input: &str) -> Result<Project, ParseError> {
                                 let expr = if let Ok(val) = expr_str.parse::<f64>() {
                                     Expression::Number(val)
                                 } else if expr_str.ends_with("px") || expr_str.ends_with("bits") {
-                                    let num_str = expr_str.trim_end_matches("px").trim_end_matches("bits").trim();
+                                    let num_str = expr_str
+                                        .trim_end_matches("px")
+                                        .trim_end_matches("bits")
+                                        .trim();
                                     if let Ok(val) = num_str.parse::<f64>() {
                                         Expression::Unit(val, "px".to_string())
                                     } else {

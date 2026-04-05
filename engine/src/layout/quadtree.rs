@@ -1,5 +1,3 @@
-/// Milestone 09 — Spatial Partitioning
-/// A simple 2D quadtree for O(n log n) collision detection and edge routing.
 use kurbo::{Point, Rect};
 
 const MAX_CAPACITY: usize = 4;

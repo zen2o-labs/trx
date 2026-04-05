@@ -2,7 +2,7 @@ pub mod element;
 pub mod style;
 pub mod style_buffer;
 
-pub use crate::ast::element::{ShapeKind, Id};
+pub use crate::ast::element::{Id, ShapeKind};
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -15,6 +15,7 @@ pub struct Project {
     pub xys: Vec<XyDeclaration>,
     pub sqltables: Vec<SqlTableDeclaration>,
     pub variables: HashMap<String, Expression>,
+    pub classes: HashMap<String, HashMap<String, String>>,
 }
 
 /// Milestone 04 — Schema Visualization
@@ -103,6 +104,7 @@ pub struct Layer {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Node {
     pub id: String,
+    pub class: Option<String>,
     pub label: Option<String>,
     pub kind: ShapeKind,
     pub properties: HashMap<String, Expression>,
@@ -128,8 +130,11 @@ pub struct Connection {
 pub enum Expression {
     Number(f64),
     String(String),
+    Boolean(bool),
     Unit(f64, String),
     VariableRef(String),
     PropertyRef(String, String), // NodeId, PropertyName
     BinaryOp(Box<Expression>, String, Box<Expression>),
+    UnaryOp(String, Box<Expression>),
+    FunctionCall { name: String, args: Vec<Expression> },
 }

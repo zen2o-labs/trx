@@ -1,5 +1,5 @@
-use crate::ast::{Layer, NamedDiagram, Node, ShapeKind};
 use crate::ast::style_buffer::StyleBuffer;
+use crate::ast::{Layer, NamedDiagram, Node, ShapeKind};
 use std::collections::HashMap;
 use std::f32::consts::PI;
 
@@ -12,7 +12,12 @@ fn collect_nodes<'a>(layer: &'a Layer, map: &mut HashMap<&'a str, &'a Node>) {
     }
 }
 
-pub fn render_diagrams(diagrams: &[NamedDiagram], svg: &mut String, y_offset: &mut f32) {
+pub fn render_diagrams(
+    diagrams: &[NamedDiagram],
+    classes: &HashMap<String, HashMap<String, String>>,
+    svg: &mut String,
+    y_offset: &mut f32,
+) {
     for diagram in diagrams {
         svg.push_str(&format!(
             r#"<text x="20" y="{}" class="diagram-title">{}</text>"#,
@@ -63,7 +68,7 @@ pub fn render_diagrams(diagrams: &[NamedDiagram], svg: &mut String, y_offset: &m
         // Nodes
         for node in node_map.values() {
             let node_y = node.y + *y_offset;
-            render_node(svg, node, node_y);
+            render_node(svg, node, node_y, classes);
         }
 
         *y_offset += 400.0;
@@ -71,9 +76,26 @@ pub fn render_diagrams(diagrams: &[NamedDiagram], svg: &mut String, y_offset: &m
 }
 
 /// Render a single node using shape-appropriate SVG and ARIA attributes.
-fn render_node(svg: &mut String, node: &Node, y: f32) {
+fn render_node(
+    svg: &mut String,
+    node: &Node,
+    y: f32,
+    classes: &HashMap<String, HashMap<String, String>>,
+) {
     // --- Milestone 05: Flat Style Buffer ---
     let mut buf = StyleBuffer::new();
+
+    if let Some(cname) = &node.class {
+        if let Some(class_attrs) = classes.get(cname) {
+            if let Some(fill_val) = class_attrs.get("fill") {
+                buf.set_color("fill", fill_val);
+            }
+            if let Some(stroke_val) = class_attrs.get("stroke") {
+                buf.set_color("stroke", stroke_val);
+            }
+        }
+    }
+
     if let Some(fill_val) = node.attributes.get("fill") {
         buf.set_color("fill", fill_val);
     }
@@ -81,7 +103,9 @@ fn render_node(svg: &mut String, node: &Node, y: f32) {
         buf.set_color("stroke", stroke_val);
     }
     let fill = buf.get_hex("fill").unwrap_or_else(|| "#ffffff".to_string());
-    let stroke = buf.get_hex("stroke").unwrap_or_else(|| "#334155".to_string());
+    let stroke = buf
+        .get_hex("stroke")
+        .unwrap_or_else(|| "#334155".to_string());
 
     // --- Milestone 07: ARIA / Interactive DOM Proxy ---
     let tooltip = node.attributes.get("tooltip").cloned();
@@ -173,17 +197,29 @@ fn render_shape(node: &Node, y: f32, fill: &str, stroke: &str) -> String {
             )
         }
         ShapeKind::Hexagon => {
-            format!(r#"<path d="{}" class="node" {} />"#, hexagon_path(x, y, w, h), style)
+            format!(
+                r#"<path d="{}" class="node" {} />"#,
+                hexagon_path(x, y, w, h),
+                style
+            )
         }
         ShapeKind::Cloud => {
-            format!(r#"<path d="{}" class="node" {} />"#, cloud_path(x, y, w, h), style)
+            format!(
+                r#"<path d="{}" class="node" {} />"#,
+                cloud_path(x, y, w, h),
+                style
+            )
         }
         ShapeKind::Cylinder | ShapeKind::Database => {
             // Cylinder rendered as rect + top/bottom ellipse arcs
             cylinder_svg(x, y, w, h, fill, stroke)
         }
         ShapeKind::Parallelogram => {
-            format!(r#"<path d="{}" class="node" {} />"#, parallelogram_path(x, y, w, h), style)
+            format!(
+                r#"<path d="{}" class="node" {} />"#,
+                parallelogram_path(x, y, w, h),
+                style
+            )
         }
         ShapeKind::Triangle => {
             format!(
@@ -230,12 +266,18 @@ fn hexagon_path(x: f32, y: f32, w: f32, h: f32) -> String {
         .collect();
     format!(
         "M {} {} L {} {} L {} {} L {} {} L {} {} L {} {} Z",
-        pts[0].0, pts[0].1,
-        pts[1].0, pts[1].1,
-        pts[2].0, pts[2].1,
-        pts[3].0, pts[3].1,
-        pts[4].0, pts[4].1,
-        pts[5].0, pts[5].1,
+        pts[0].0,
+        pts[0].1,
+        pts[1].0,
+        pts[1].1,
+        pts[2].0,
+        pts[2].1,
+        pts[3].0,
+        pts[3].1,
+        pts[4].0,
+        pts[4].1,
+        pts[5].0,
+        pts[5].1,
     )
 }
 
@@ -260,10 +302,14 @@ fn parallelogram_path(x: f32, y: f32, w: f32, h: f32) -> String {
     let skew = w * 0.15;
     format!(
         "M {},{} L {},{} L {},{} L {},{} Z",
-        x + skew, y,
-        x + w, y,
-        x + w - skew, y + h,
-        x, y + h,
+        x + skew,
+        y,
+        x + w,
+        y,
+        x + w - skew,
+        y + h,
+        x,
+        y + h,
     )
 }
 

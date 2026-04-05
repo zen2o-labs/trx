@@ -1,0 +1,4 @@
+node included_node { height: 200 }
+
+// Deliberate syntax mistake following correctly formatted node
+error_node ===>>> unexpected syntax

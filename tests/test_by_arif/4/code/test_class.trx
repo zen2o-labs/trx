@@ -1,0 +1,8 @@
+style .premium_class { stroke: #d4af37; fill: #ffffff; }
+style .dark_mode { stroke: #aaaaaa; fill: #222222; }
+
+# TestingCSSClasses
+node base_box (class: .premium_class) { width: 250 }
+node internal_box (class: .dark_mode) [ tooltip: "I am shadowed" ]
+
+base_box >> internal_box

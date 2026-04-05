@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 3000" width="100%" height="100%" style="cursor: grab;"><style>
+        .node { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+        .connection { stroke: #64748b; stroke-width: 2; fill: none; }
+        .label { font-family: Inter, sans-serif; font-size: 13px; fill: #1e293b; }
+        .conn-label { font-family: Inter, sans-serif; font-size: 11px; fill: #64748b; }
+        .diagram-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
+    </style><text x="20" y="50" class="diagram-title">Architecture Overview</text><path d="M 298.249 195 L 298.249 225 L 246.28746 240 L 194.32593 225 L 194.32593 195 L 246.28746 180 Z" class="node" fill="#ffffff" stroke="#334155" stroke-width="2" /><text x="246.28746" y="210" text-anchor="middle" dominant-baseline="middle" class="label">NodeA</text><rect x="213.71254" y="187.2" width="120" height="52.8" fill="#ffffff" stroke="#334155" stroke-width="2" />
+           <ellipse cx="273.71252" cy="187.2" rx="60" ry="7.2" fill="#ffffff" stroke="#334155" stroke-width="2" />
+           <ellipse cx="273.71252" cy="240" rx="60" ry="7.2" fill="#ffffff" stroke="#334155" stroke-width="2" /><text x="273.71252" y="210" text-anchor="middle" dominant-baseline="middle" class="label">NodeB</text><text x="20" y="480" class="diagram-title">Packet: TCP_Header</text><rect x="20" y="510" width="120" height="50" rx="0" class="node" fill="#e3f2fd" /><text x="80" y="530" text-anchor="middle" class="label">src_port</text><text x="80" y="545" text-anchor="middle" font-size="10px" fill="#666">0..15</text><rect x="140" y="510" width="120" height="50" rx="0" class="node" fill="#e3f2fd" /><text x="200" y="530" text-anchor="middle" class="label">dst_port</text><text x="200" y="545" text-anchor="middle" font-size="10px" fill="#666">16..31</text><text x="20" y="610" class="diagram-title">XY Chart: Telemetry</text><line x1="50" y1="840" x2="450" y2="840" stroke="#333" stroke-width="2" /><line x1="50" y1="840" x2="50" y2="640" stroke="#333" stroke-width="2" /><text x="250" y="860" text-anchor="middle" font-size="12px">Time</text><text x="50" y="740" text-anchor="middle" font-size="12px" transform="rotate(-90 50 740)" dy="-30">CPU</text><text x="70" y="660" font-size="12px" fill="#1976d2">Data Source: @prometheus::cpu_usage</text><polyline points="50 840 150 790 250 720 350 760" fill="none" stroke="#e91e63" stroke-width="3" />
+<script type="text/javascript">
+<![CDATA[
+(function() {
+    const svg = document.documentElement;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let viewBoxX = 0;
+    let viewBoxY = 0;
+    let viewBoxWidth = 0;
+    let viewBoxHeight = 0;
+
+    function parseViewBox() {
+        const vb = svg.getAttribute("viewBox");
+        if (vb) {
+            const parts = vb.split(" ").map(Number);
+            if (parts.length === 4) {
+                viewBoxX = parts[0];
+                viewBoxY = parts[1];
+                viewBoxWidth = parts[2];
+                viewBoxHeight = parts[3];
+            }
+        }
+    }
+
+    parseViewBox();
+
+    svg.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        svg.style.cursor = "grabbing";
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const clientRect = svg.getBoundingClientRect();
+        const scaleX = viewBoxWidth / clientRect.width;
+        const scaleY = viewBoxHeight / clientRect.height;
+
+        viewBoxX -= dx * scaleX;
+        viewBoxY -= dy * scaleY;
+        
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    const stopDragging = () => {
+        isDragging = false;
+        svg.style.cursor = "grab";
+    };
+
+    svg.addEventListener("mouseup", stopDragging);
+    svg.addEventListener("mouseleave", stopDragging);
+
+    svg.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        parseViewBox();
+        const clientRect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - clientRect.left;
+        const mouseY = e.clientY - clientRect.top;
+        
+        const svgX = viewBoxX + (mouseX / clientRect.width) * viewBoxWidth;
+        const svgY = viewBoxY + (mouseY / clientRect.height) * viewBoxHeight;
+
+        const zoomFactor = 1.0 + (e.deltaY * 0.001);
+        
+        viewBoxWidth *= zoomFactor;
+        viewBoxHeight *= zoomFactor;
+
+        viewBoxX = svgX - (mouseX / clientRect.width) * viewBoxWidth;
+        viewBoxY = svgY - (mouseY / clientRect.height) * viewBoxHeight;
+
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+    }, { passive: false });
+})();
+]]>
+</script>
+</svg>

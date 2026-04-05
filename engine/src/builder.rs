@@ -17,6 +17,7 @@ impl ProjectBuilder {
                 xys: Vec::new(),
                 sqltables: Vec::new(),
                 variables: HashMap::new(),
+                classes: HashMap::new(),
             },
         }
     }
@@ -36,6 +37,7 @@ impl ProjectBuilder {
             if !diagram.root.nodes.iter().any(|n| n.id == id) {
                 diagram.root.nodes.push(Node {
                     id: id.to_string(),
+                    class: None,
                     label: Some(id.to_string()),
                     kind: ShapeKind::Box,
                     properties: HashMap::new(),
@@ -57,6 +59,7 @@ impl ProjectBuilder {
             if !diagram.root.nodes.iter().any(|n| n.id == from) {
                 diagram.root.nodes.push(Node {
                     id: from.to_string(),
+                    class: None,
                     label: Some(from.to_string()),
                     kind: ShapeKind::Box,
                     properties: HashMap::new(),
@@ -72,6 +75,7 @@ impl ProjectBuilder {
             if !diagram.root.nodes.iter().any(|n| n.id == to) {
                 diagram.root.nodes.push(Node {
                     id: to.to_string(),
+                    class: None,
                     label: Some(to.to_string()),
                     kind: ShapeKind::Box,
                     properties: HashMap::new(),
