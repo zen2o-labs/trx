@@ -26,7 +26,7 @@ variable_decl = { "let" ~ identifier ~ "=" ~ math_expression }
 
 math_expression = { math_term ~ (WHITESPACE* ~ math_op ~ WHITESPACE* ~ math_term)* }
 function_call = { (identifier ~ ("." ~ identifier)*) ~ "(" ~ (math_expression ~ ("," ~ math_expression)*)? ~ ")" }
-math_term = { "-"? ~ (function_call | property_ref | number_with_unit | number | identifier | string_literal | color_literal) }
+math_term = { "-"? ~ (number_with_unit | number | function_call | property_ref | identifier | string_literal | color_literal) }
 property_ref = { identifier ~ ("." ~ identifier)+ }
 number_with_unit = @{ number ~ identifier }
 math_op = { "==" | "!=" | "<=" | ">=" | "<" | ">" | "+" | "-" | "*" | "/" }

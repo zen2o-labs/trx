@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 3000" width="100%" height="100%" style="cursor: grab;"><style>
+        .node { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+        .connection { stroke: #64748b; stroke-width: 2; fill: none; }
+        .label { font-family: Inter, sans-serif; font-size: 13px; fill: #1e293b; }
+        .conn-label { font-family: Inter, sans-serif; font-size: 11px; fill: #64748b; }
+        .diagram-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
+    </style><text x="20" y="50" class="diagram-title">Hybrid System</text><rect x="213.713" y="180" width="150" height="60" rx="5" class="node" fill="#ffffff" stroke="#334155" stroke-width="2" /><text x="288.713" y="210" text-anchor="middle" dominant-baseline="middle" class="label">SensorNode</text><rect x="186.287" y="180" width="200" height="60" rx="5" class="node" fill="#ffffff" stroke="#334155" stroke-width="2" /><text x="286.287" y="210" text-anchor="middle" dominant-baseline="middle" class="label">Controller</text><text x="20" y="480" class="diagram-title">Packet: CommandFrame</text><rect x="20.000" y="510.000" width="200.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="120.000" y="530.000" text-anchor="middle" class="label">OpCode</text><text x="120.000" y="545.000" text-anchor="middle" font-size="10px" fill="#666">0..7</text><rect x="220.000" y="510.000" width="600.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="520.000" y="530.000" text-anchor="middle" class="label">Payload</text><text x="520.000" y="545.000" text-anchor="middle" font-size="10px" fill="#666">8..31</text><text x="20" y="610" class="diagram-title">State Machine: OrderWorkflow</text><circle cx="50" cy="640" r="30" class="node" fill="#fafafa" /><text x="50" y="640" text-anchor="middle" class="label" dy=".3em">Created</text><circle cx="200" cy="640" r="30" class="node" fill="#fafafa" /><text x="200" y="640" text-anchor="middle" class="label" dy=".3em">Refunded</text><circle cx="350" cy="640" r="30" class="node" fill="#fafafa" /><text x="350" y="640" text-anchor="middle" class="label" dy=".3em">[*]</text><circle cx="500" cy="640" r="30" class="node" fill="#fafafa" /><text x="500" y="640" text-anchor="middle" class="label" dy=".3em">Paid</text><circle cx="650" cy="640" r="30" class="node" fill="#fafafa" /><text x="650" y="640" text-anchor="middle" class="label" dy=".3em">Shipped</text><line x1="380" y1="640" x2="20" y2="640" class="connection" stroke-dasharray="5,5" /><line x1="80" y1="640" x2="470" y2="640" class="connection" stroke-dasharray="5,5" /><text x="275" y="630" text-anchor="middle" font-size="10px" fill="#d32f2f">process_payment</text><line x1="530" y1="640" x2="620" y2="640" class="connection" stroke-dasharray="5,5" /><text x="575" y="630" text-anchor="middle" font-size="10px" fill="#d32f2f">delivery</text><line x1="680" y1="640" x2="320" y2="640" class="connection" stroke-dasharray="5,5" /><line x1="530" y1="640" x2="170" y2="640" class="connection" stroke-dasharray="5,5" /><text x="350" y="630" text-anchor="middle" font-size="10px" fill="#d32f2f">cancel</text>
+<script type="text/javascript">
+<![CDATA[
+(function() {
+    const svg = document.documentElement;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let viewBoxX = 0;
+    let viewBoxY = 0;
+    let viewBoxWidth = 0;
+    let viewBoxHeight = 0;
+
+    function parseViewBox() {
+        const vb = svg.getAttribute("viewBox");
+        if (vb) {
+            const parts = vb.split(" ").map(Number);
+            if (parts.length === 4) {
+                viewBoxX = parts[0];
+                viewBoxY = parts[1];
+                viewBoxWidth = parts[2];
+                viewBoxHeight = parts[3];
+            }
+        }
+    }
+
+    parseViewBox();
+
+    svg.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        svg.style.cursor = "grabbing";
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const clientRect = svg.getBoundingClientRect();
+        const scaleX = viewBoxWidth / clientRect.width;
+        const scaleY = viewBoxHeight / clientRect.height;
+
+        viewBoxX -= dx * scaleX;
+        viewBoxY -= dy * scaleY;
+        
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    const stopDragging = () => {
+        isDragging = false;
+        svg.style.cursor = "grab";
+    };
+
+    svg.addEventListener("mouseup", stopDragging);
+    svg.addEventListener("mouseleave", stopDragging);
+
+    svg.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        parseViewBox();
+        const clientRect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - clientRect.left;
+        const mouseY = e.clientY - clientRect.top;
+        
+        const svgX = viewBoxX + (mouseX / clientRect.width) * viewBoxWidth;
+        const svgY = viewBoxY + (mouseY / clientRect.height) * viewBoxHeight;
+
+        const zoomFactor = 1.0 + (e.deltaY * 0.001);
+        
+        viewBoxWidth *= zoomFactor;
+        viewBoxHeight *= zoomFactor;
+
+        viewBoxX = svgX - (mouseX / clientRect.width) * viewBoxWidth;
+        viewBoxY = svgY - (mouseY / clientRect.height) * viewBoxHeight;
+
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+    }, { passive: false });
+})();
+]]>
+</script>
+</svg>

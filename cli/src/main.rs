@@ -1,8 +1,10 @@
+use serde_json::json;
 use std::env;
 use std::fs;
 use std::io::{self, Write};
 use std::path::Path;
 use trx_engine::evaluator::evaluate_project;
+use trx_engine::parser::error::ParseError;
 use trx_engine::parser::parse;
 use trx_engine::render::svg::render_svg;
 use trx_layout::apply_layout;
@@ -122,37 +124,50 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut project = match parse(&preprocessed.flattened_code) {
         Ok(p) => p,
         Err(e) => {
-            let err_str = e.to_string();
-            let mut report = err_str.clone();
+            let (mut err_msg, mut err_line, mut err_col) = ("".to_string(), 0, 0);
+            if let ParseError::ParseFailed { location, message } = &e {
+                err_msg = message.clone();
+                err_line = location.line;
+                err_col = location.col;
+            } else {
+                err_msg = e.to_string();
+            }
 
-            if let Some(idx) = err_str.find(" --> ") {
-                let rest = &err_str[idx + 5..];
-                if let Some(colon) = rest.find(':') {
-                    if let Ok(flat_line) = rest[..colon].parse::<usize>() {
-                        for seg in &preprocessed.source_map {
-                            if flat_line >= seg.flattened_start_line
-                                && flat_line <= seg.flattened_end_line
-                            {
-                                let real_line = seg.original_start_line
-                                    + (flat_line - seg.flattened_start_line);
-                                report = format!(
-                                    "Error in {} at line {}:\n{}",
-                                    seg.file_path, real_line, err_str
-                                );
-                                break;
-                            }
-                        }
-                    }
+            let mut real_file = input_path.to_string();
+            let mut real_line = err_line;
+
+            for seg in &preprocessed.source_map {
+                if err_line >= seg.flattened_start_line && err_line <= seg.flattened_end_line {
+                    real_line = seg.original_start_line + (err_line - seg.flattened_start_line);
+                    real_file = seg.file_path.clone();
+                    break;
                 }
             }
-            eprintln!("{}", report);
+
+            let diag = json!({
+                "error": err_msg,
+                "line": real_line,
+                "col": err_col,
+                "file": real_file
+            });
+
+            eprintln!("{}", serde_json::to_string_pretty(&diag).unwrap());
             std::process::exit(1);
         }
     };
     println!("Found {} diagrams.", project.diagrams.len());
 
     println!("Evaluating math expressions...");
-    evaluate_project(&mut project);
+    if let Err(e) = evaluate_project(&mut project) {
+        let diag = json!({
+            "error": e.to_string(),
+            "line": 0,
+            "col": 0,
+            "file": input_path
+        });
+        eprintln!("{}", serde_json::to_string_pretty(&diag).unwrap());
+        std::process::exit(1);
+    }
 
     println!("Calculating layouts...");
     apply_layout(&mut project);

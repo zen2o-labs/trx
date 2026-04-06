@@ -8,10 +8,8 @@ crate-type = ["rlib", "cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2"
-# Internal Workspace Dependencies
 trx-syntax = { workspace = true }
 
-# Parsing and Logic
 pest = { workspace = true }
 pest_derive = { workspace = true }
 thiserror = { workspace = true }
@@ -24,7 +22,10 @@ serde_json = { workspace = true }
 kurbo = { workspace = true }
 smallvec = { workspace = true }
 petgraph = { workspace = true }
+libm = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = { workspace = true }
 
 [dev-dependencies]
 trx-layout = { workspace = true }
-
