@@ -1,0 +1,21 @@
+state OrderWorkflow {
+    [*] -> Created
+    Created -> Paid : @process_payment
+    Paid -> Shipped : @delivery
+    Shipped -> [*]
+    Paid -> Refunded : @cancel
+}
+
+packet CommandFrame {
+    0..7: OpCode
+    8..31: Payload
+}
+
+# Hybrid System
+
+layer Hardware {
+    Controller { width: 200 }
+    SensorNode { width: 150 }
+}
+
+Controller -> SensorNode: "CMD: Read"

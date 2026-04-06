@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 3000" width="100%" height="100%" style="cursor: grab;"><style>
+        .node { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+        .connection { stroke: #64748b; stroke-width: 2; fill: none; }
+        .label { font-family: Inter, sans-serif; font-size: 13px; fill: #1e293b; }
+        .conn-label { font-family: Inter, sans-serif; font-size: 11px; fill: #64748b; }
+        .diagram-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
+    </style><text x="20" y="50" class="diagram-title">Packet: IPv4_Complex</text><rect x="20.000" y="80.000" width="20.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="30.000" y="100.000" text-anchor="middle" class="label">Version</text><text x="30.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">0..3</text><rect x="40.000" y="80.000" width="20.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="50.000" y="100.000" text-anchor="middle" class="label">IHL</text><text x="50.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">4..7</text><rect x="60.000" y="80.000" width="30.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="75.000" y="100.000" text-anchor="middle" class="label">DSCP</text><text x="75.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">8..13</text><rect x="90.000" y="80.000" width="10.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="95.000" y="100.000" text-anchor="middle" class="label">ECN</text><text x="95.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">14..15</text><rect x="100.000" y="80.000" width="80.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="140.000" y="100.000" text-anchor="middle" class="label">TotalLength</text><text x="140.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">16..31</text><rect x="180.000" y="80.000" width="80.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="220.000" y="100.000" text-anchor="middle" class="label">Identification</text><text x="220.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">32..47</text><rect x="260.000" y="80.000" width="15.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="267.500" y="100.000" text-anchor="middle" class="label">Flags</text><text x="267.500" y="115.000" text-anchor="middle" font-size="10px" fill="#666">48..50</text><rect x="275.000" y="80.000" width="65.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="307.500" y="100.000" text-anchor="middle" class="label">FragmentOffset</text><text x="307.500" y="115.000" text-anchor="middle" font-size="10px" fill="#666">51..63</text><rect x="340.000" y="80.000" width="40.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="360.000" y="100.000" text-anchor="middle" class="label">TTL</text><text x="360.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">64..71</text><rect x="380.000" y="80.000" width="40.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="400.000" y="100.000" text-anchor="middle" class="label">Protocol</text><text x="400.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">72..79</text><rect x="420.000" y="80.000" width="80.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="460.000" y="100.000" text-anchor="middle" class="label">HeaderChecksum</text><text x="460.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">80..95</text><rect x="500.000" y="80.000" width="160.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="580.000" y="100.000" text-anchor="middle" class="label">SourceAddress</text><text x="580.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">96..127</text><rect x="660.000" y="80.000" width="160.000" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="740.000" y="100.000" text-anchor="middle" class="label">DestinationAddress</text><text x="740.000" y="115.000" text-anchor="middle" font-size="10px" fill="#666">128..159</text><text x="20" y="180" class="diagram-title">Packet: TCP_Segment</text><rect x="20.000" y="210.000" width="81.529" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="60.764" y="230.000" text-anchor="middle" class="label">SourcePort</text><text x="60.764" y="245.000" text-anchor="middle" font-size="10px" fill="#666">0..15</text><rect x="101.529" y="210.000" width="81.529" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="142.293" y="230.000" text-anchor="middle" class="label">DestinationPort</text><text x="142.293" y="245.000" text-anchor="middle" font-size="10px" fill="#666">16..31</text><rect x="183.057" y="210.000" width="163.057" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="264.586" y="230.000" text-anchor="middle" class="label">SequenceNumber</text><text x="264.586" y="245.000" text-anchor="middle" font-size="10px" fill="#666">32..63</text><rect x="346.115" y="210.000" width="163.057" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="427.643" y="230.000" text-anchor="middle" class="label">AckNumber</text><text x="427.643" y="245.000" text-anchor="middle" font-size="10px" fill="#666">64..95</text><rect x="509.172" y="210.000" width="20.382" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="519.363" y="230.000" text-anchor="middle" class="label">DataOffset</text><text x="519.363" y="245.000" text-anchor="middle" font-size="10px" fill="#666">96..99</text><rect x="529.554" y="210.000" width="15.287" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="537.197" y="230.000" text-anchor="middle" class="label">Reserved</text><text x="537.197" y="245.000" text-anchor="middle" font-size="10px" fill="#666">100..102</text><rect x="544.841" y="210.000" width="30.573" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="560.127" y="230.000" text-anchor="middle" class="label">Flags</text><text x="560.127" y="245.000" text-anchor="middle" font-size="10px" fill="#666">103..108</text><rect x="575.414" y="210.000" width="81.529" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="616.178" y="230.000" text-anchor="middle" class="label">WindowSize</text><text x="616.178" y="245.000" text-anchor="middle" font-size="10px" fill="#666">109..124</text><rect x="656.943" y="210.000" width="81.529" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="697.707" y="230.000" text-anchor="middle" class="label">Checksum</text><text x="697.707" y="245.000" text-anchor="middle" font-size="10px" fill="#666">125..140</text><rect x="738.471" y="210.000" width="81.529" height="50.000" rx="0" class="node" fill="#e3f2fd" stroke="#334155" stroke-width="1" /><text x="779.236" y="230.000" text-anchor="middle" class="label">UrgentPointer</text><text x="779.236" y="245.000" text-anchor="middle" font-size="10px" fill="#666">141..156</text>
+<script type="text/javascript">
+<![CDATA[
+(function() {
+    const svg = document.documentElement;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let viewBoxX = 0;
+    let viewBoxY = 0;
+    let viewBoxWidth = 0;
+    let viewBoxHeight = 0;
+
+    function parseViewBox() {
+        const vb = svg.getAttribute("viewBox");
+        if (vb) {
+            const parts = vb.split(" ").map(Number);
+            if (parts.length === 4) {
+                viewBoxX = parts[0];
+                viewBoxY = parts[1];
+                viewBoxWidth = parts[2];
+                viewBoxHeight = parts[3];
+            }
+        }
+    }
+
+    parseViewBox();
+
+    svg.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        svg.style.cursor = "grabbing";
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const clientRect = svg.getBoundingClientRect();
+        const scaleX = viewBoxWidth / clientRect.width;
+        const scaleY = viewBoxHeight / clientRect.height;
+
+        viewBoxX -= dx * scaleX;
+        viewBoxY -= dy * scaleY;
+        
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    const stopDragging = () => {
+        isDragging = false;
+        svg.style.cursor = "grab";
+    };
+
+    svg.addEventListener("mouseup", stopDragging);
+    svg.addEventListener("mouseleave", stopDragging);
+
+    svg.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        parseViewBox();
+        const clientRect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - clientRect.left;
+        const mouseY = e.clientY - clientRect.top;
+        
+        const svgX = viewBoxX + (mouseX / clientRect.width) * viewBoxWidth;
+        const svgY = viewBoxY + (mouseY / clientRect.height) * viewBoxHeight;
+
+        const zoomFactor = 1.0 + (e.deltaY * 0.001);
+        
+        viewBoxWidth *= zoomFactor;
+        viewBoxHeight *= zoomFactor;
+
+        viewBoxX = svgX - (mouseX / clientRect.width) * viewBoxWidth;
+        viewBoxY = svgY - (mouseY / clientRect.height) * viewBoxHeight;
+
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+    }, { passive: false });
+})();
+]]>
+</script>
+</svg>

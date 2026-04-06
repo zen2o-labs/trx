@@ -1,0 +1,30 @@
+style .api { fill: #dcfce7, stroke: #22c55e }
+style .auth { fill: #fef9c3, stroke: #eab308 }
+let main_width = 1000
+let svc_h = 60
+
+# Microservices Deployment
+
+layer Ingress {
+    LB { width: 200, height: svc_h }
+}
+
+layer CoreServices {
+    layer AuthGroup {
+        AuthSvc (class: .auth) { width: 150 }
+        SessionDB { width: 120 }
+    }
+    
+    layer OrderGroup {
+        OrderSvc (class: .api) { width: 150 }
+        InventorySvc (class: .api) { width: 150 }
+        PaymentGateway { width: 180 }
+    }
+}
+
+LB -> AuthSvc: "Verify Token"
+AuthSvc -> SessionDB
+LB -> OrderSvc: "POST /orders"
+OrderSvc -> InventorySvc: "Check Stock"
+OrderSvc -> PaymentGateway: "Charge"
+InventorySvc -> OrderSvc: "Success"

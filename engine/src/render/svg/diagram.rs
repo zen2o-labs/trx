@@ -82,7 +82,7 @@ fn render_node(
     y: f32,
     classes: &HashMap<String, HashMap<String, String>>,
 ) {
-    // --- Milestone 05: Flat Style Buffer ---
+    //Flat Style Buffer
     let mut buf = StyleBuffer::new();
 
     if let Some(cname) = &node.class {
@@ -107,7 +107,7 @@ fn render_node(
         .get_hex("stroke")
         .unwrap_or_else(|| "#334155".to_string());
 
-    // --- Milestone 07: ARIA / Interactive DOM Proxy ---
+    // ARIA / Interactive DOM Proxy
     let tooltip = node.attributes.get("tooltip").cloned();
     let url = node.attributes.get("url").cloned();
 
@@ -150,7 +150,7 @@ fn render_node(
 }
 
 /// Generate the SVG path/shape element for the given node kind.
-/// Milestone 03 — Geometric Primitives.
+//Geometric Primitives.
 fn render_shape(node: &Node, y: f32, fill: &str, stroke: &str) -> String {
     let x = node.x;
     let w = node.width;
@@ -198,8 +198,8 @@ fn render_shape(node: &Node, y: f32, fill: &str, stroke: &str) -> String {
         }
         ShapeKind::Hexagon => {
             format!(
-                r#"<path d="{}" class="node" {} />"#,
-                hexagon_path(x, y, w, h),
+                r#"<polygon points="{}" class="node" {} />"#,
+                hexagon_points(x, y, w, h),
                 style
             )
         }
@@ -240,7 +240,7 @@ fn render_shape(node: &Node, y: f32, fill: &str, stroke: &str) -> String {
             )
         }
         _ => {
-            // Default: plain rect (Box, Rectangle, and all infrastructure shapes)
+            //  plain rect (Box, Rectangle, and all infrastructure shapes)
             format!(
                 r#"<rect x="{}" y="{}" width="{}" height="{}" rx="5" class="node" {} />"#,
                 x, y, w, h, style
@@ -249,36 +249,27 @@ fn render_shape(node: &Node, y: f32, fill: &str, stroke: &str) -> String {
     }
 }
 
-// ─── Geometric Path Generators ────────────────────────────────────────────────
+// Geometric Path Generators
 
-/// Flat-topped regular hexagon SVG path.
-fn hexagon_path(x: f32, y: f32, w: f32, h: f32) -> String {
+/// Flat-topped regular hexagon SVG points.
+fn hexagon_points(x: f32, y: f32, w: f32, h: f32) -> String {
     let cx = x + w / 2.0;
     let cy = y + h / 2.0;
     let rx = w / 2.0;
     let ry = h / 2.0;
-    // 6 vertices at 0°, 60°, 120°, 180°, 240°, 300°
-    let pts: Vec<(f32, f32)> = (0..6)
-        .map(|i| {
-            let angle = PI / 180.0 * (60.0 * i as f32 - 30.0);
-            (cx + rx * angle.cos(), cy + ry * angle.sin())
-        })
-        .collect();
-    format!(
-        "M {} {} L {} {} L {} {} L {} {} L {} {} L {} {} Z",
-        pts[0].0,
-        pts[0].1,
-        pts[1].0,
-        pts[1].1,
-        pts[2].0,
-        pts[2].1,
-        pts[3].0,
-        pts[3].1,
-        pts[4].0,
-        pts[4].1,
-        pts[5].0,
-        pts[5].1,
-    )
+    let mut pts = String::new();
+    for i in 0..6 {
+        let angle = PI / 180.0 * (60.0 * i as f32 - 30.0);
+        if i > 0 {
+            pts.push(' ');
+        }
+        pts.push_str(&format!(
+            "{},{}",
+            cx + rx * angle.cos(),
+            cy + ry * angle.sin()
+        ));
+    }
+    pts
 }
 
 /// Cloud shape approximated with cubic Bézier arcs.
@@ -313,22 +304,23 @@ fn parallelogram_path(x: f32, y: f32, w: f32, h: f32) -> String {
     )
 }
 
-/// Cylinder shape: rect body + top ellipse arc.
+/// Cylinder shape single path.
 fn cylinder_svg(x: f32, y: f32, w: f32, h: f32, fill: &str, stroke: &str) -> String {
     let ry = h * 0.12; // ellipse half-height at top/bottom
+    let lx = x;
+    let rx = x + w;
+    let cy_top = y + ry;
+    let cy_bot = y + h - ry;
+    let r_x = w / 2.0;
     let style = format!(r#"fill="{}" stroke="{}" stroke-width="2""#, fill, stroke);
     format!(
-        r#"<rect x="{x}" y="{ty}" width="{w}" height="{bh}" {style} />
-           <ellipse cx="{cx}" cy="{ty}" rx="{rx}" ry="{ry}" {style} />
-           <ellipse cx="{cx}" cy="{by}" rx="{rx}" ry="{ry}" {style} />"#,
-        x = x,
-        ty = y + ry,
-        w = w,
-        bh = h - ry,
-        cx = x + w / 2.0,
-        rx = w / 2.0,
+        r#"<path d="M {lx},{cy_top} A {r_x},{ry} 0 0,1 {rx},{cy_top} L {rx},{cy_bot} A {r_x},{ry} 0 0,1 {lx},{cy_bot} Z M {lx},{cy_top} A {r_x},{ry} 0 0,0 {rx},{cy_top}" class="node" {style} />"#,
+        lx = lx,
+        rx = rx,
+        cy_top = cy_top,
+        cy_bot = cy_bot,
+        r_x = r_x,
         ry = ry,
-        by = y + h,
-        style = style,
+        style = style
     )
 }

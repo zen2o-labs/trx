@@ -1,0 +1,26 @@
+sqltable Users {
+    PK id: INT
+    username: VARCHAR
+    email: EMAIL
+    created_at: TIMESTAMP
+}
+
+sqltable Orders {
+    PK id: INT
+    FK user_id: INT -> Users
+    status: STATUS
+    total: DECIMAL
+}
+
+sqltable OrderItems {
+    PK id: INT
+    FK order_id: INT -> Orders
+    FK product_id: INT -> Products
+    quantity: INT
+}
+
+sqltable Products {
+    PK id: INT
+    name: NAME
+    price: DECIMAL
+}

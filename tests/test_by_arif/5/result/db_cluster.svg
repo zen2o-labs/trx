@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 3000" width="100%" height="100%" style="cursor: grab;"><style>
+        .node { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+        .connection { stroke: #64748b; stroke-width: 2; fill: none; }
+        .label { font-family: Inter, sans-serif; font-size: 13px; fill: #1e293b; }
+        .conn-label { font-family: Inter, sans-serif; font-size: 11px; fill: #64748b; }
+        .diagram-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
+    </style><rect x="20" y="50" width="240" height="152" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/><rect x="20" y="50" width="240" height="36" rx="6" fill="#334155"/><text x="140" y="73" text-anchor="middle" font-weight="bold" fill="#f8fafc" font-size="14" font-family="monospace">Users</text><rect x="20" y="86" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="26" y="104" fill="#fbbf24" font-size="10" font-weight="bold" font-family="monospace">PK</text><text x="46" y="104" fill="#e2e8f0" font-size="12" font-family="monospace">id</text><text x="252" y="104" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="114" x2="260" y2="114" stroke="#334155" stroke-width="1"/><text x="30" y="132" fill="#e2e8f0" font-size="12" font-family="monospace">username</text><text x="252" y="132" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">VARCHAR</text><line x1="20" y1="142" x2="260" y2="142" stroke="#334155" stroke-width="1"/><rect x="20" y="142" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="30" y="160" fill="#e2e8f0" font-size="12" font-family="monospace">email</text><text x="252" y="160" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">EMAIL</text><line x1="20" y1="170" x2="260" y2="170" stroke="#334155" stroke-width="1"/><text x="30" y="188" fill="#e2e8f0" font-size="12" font-family="monospace">created_at</text><text x="252" y="188" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">TIMESTAMP</text><line x1="20" y1="198" x2="260" y2="198" stroke="#334155" stroke-width="1"/><rect x="20" y="242" width="240" height="152" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/><rect x="20" y="242" width="240" height="36" rx="6" fill="#334155"/><text x="140" y="265" text-anchor="middle" font-weight="bold" fill="#f8fafc" font-size="14" font-family="monospace">Orders</text><rect x="20" y="278" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="26" y="296" fill="#fbbf24" font-size="10" font-weight="bold" font-family="monospace">PK</text><text x="46" y="296" fill="#e2e8f0" font-size="12" font-family="monospace">id</text><text x="252" y="296" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="306" x2="260" y2="306" stroke="#334155" stroke-width="1"/><text x="26" y="324" fill="#60a5fa" font-size="9" font-family="monospace">-&gt;Users</text><text x="56" y="324" fill="#e2e8f0" font-size="12" font-family="monospace">user_id</text><text x="252" y="324" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="334" x2="260" y2="334" stroke="#334155" stroke-width="1"/><rect x="20" y="334" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="30" y="352" fill="#e2e8f0" font-size="12" font-family="monospace">status</text><text x="252" y="352" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">STATUS</text><line x1="20" y1="362" x2="260" y2="362" stroke="#334155" stroke-width="1"/><text x="30" y="380" fill="#e2e8f0" font-size="12" font-family="monospace">total</text><text x="252" y="380" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">DECIMAL</text><line x1="20" y1="390" x2="260" y2="390" stroke="#334155" stroke-width="1"/><rect x="20" y="434" width="240" height="152" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/><rect x="20" y="434" width="240" height="36" rx="6" fill="#334155"/><text x="140" y="457" text-anchor="middle" font-weight="bold" fill="#f8fafc" font-size="14" font-family="monospace">OrderItems</text><rect x="20" y="470" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="26" y="488" fill="#fbbf24" font-size="10" font-weight="bold" font-family="monospace">PK</text><text x="46" y="488" fill="#e2e8f0" font-size="12" font-family="monospace">id</text><text x="252" y="488" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="498" x2="260" y2="498" stroke="#334155" stroke-width="1"/><text x="26" y="516" fill="#60a5fa" font-size="9" font-family="monospace">-&gt;Orders</text><text x="56" y="516" fill="#e2e8f0" font-size="12" font-family="monospace">order_id</text><text x="252" y="516" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="526" x2="260" y2="526" stroke="#334155" stroke-width="1"/><rect x="20" y="526" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="26" y="544" fill="#60a5fa" font-size="9" font-family="monospace">-&gt;Products</text><text x="56" y="544" fill="#e2e8f0" font-size="12" font-family="monospace">product_id</text><text x="252" y="544" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="554" x2="260" y2="554" stroke="#334155" stroke-width="1"/><text x="30" y="572" fill="#e2e8f0" font-size="12" font-family="monospace">quantity</text><text x="252" y="572" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="582" x2="260" y2="582" stroke="#334155" stroke-width="1"/><rect x="20" y="626" width="240" height="124" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/><rect x="20" y="626" width="240" height="36" rx="6" fill="#334155"/><text x="140" y="649" text-anchor="middle" font-weight="bold" fill="#f8fafc" font-size="14" font-family="monospace">Products</text><rect x="20" y="662" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="26" y="680" fill="#fbbf24" font-size="10" font-weight="bold" font-family="monospace">PK</text><text x="46" y="680" fill="#e2e8f0" font-size="12" font-family="monospace">id</text><text x="252" y="680" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">INT</text><line x1="20" y1="690" x2="260" y2="690" stroke="#334155" stroke-width="1"/><text x="30" y="708" fill="#e2e8f0" font-size="12" font-family="monospace">name</text><text x="252" y="708" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">NAME</text><line x1="20" y1="718" x2="260" y2="718" stroke="#334155" stroke-width="1"/><rect x="20" y="718" width="240" height="28" fill="#0f172a" opacity="0.4"/><text x="30" y="736" fill="#e2e8f0" font-size="12" font-family="monospace">price</text><text x="252" y="736" text-anchor="end" fill="#94a3b8" font-size="11" font-family="monospace">DECIMAL</text><line x1="20" y1="746" x2="260" y2="746" stroke="#334155" stroke-width="1"/>
+<script type="text/javascript">
+<![CDATA[
+(function() {
+    const svg = document.documentElement;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let viewBoxX = 0;
+    let viewBoxY = 0;
+    let viewBoxWidth = 0;
+    let viewBoxHeight = 0;
+
+    function parseViewBox() {
+        const vb = svg.getAttribute("viewBox");
+        if (vb) {
+            const parts = vb.split(" ").map(Number);
+            if (parts.length === 4) {
+                viewBoxX = parts[0];
+                viewBoxY = parts[1];
+                viewBoxWidth = parts[2];
+                viewBoxHeight = parts[3];
+            }
+        }
+    }
+
+    parseViewBox();
+
+    svg.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        svg.style.cursor = "grabbing";
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const clientRect = svg.getBoundingClientRect();
+        const scaleX = viewBoxWidth / clientRect.width;
+        const scaleY = viewBoxHeight / clientRect.height;
+
+        viewBoxX -= dx * scaleX;
+        viewBoxY -= dy * scaleY;
+        
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    const stopDragging = () => {
+        isDragging = false;
+        svg.style.cursor = "grab";
+    };
+
+    svg.addEventListener("mouseup", stopDragging);
+    svg.addEventListener("mouseleave", stopDragging);
+
+    svg.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        parseViewBox();
+        const clientRect = svg.getBoundingClientRect();
+        const mouseX = e.clientX - clientRect.left;
+        const mouseY = e.clientY - clientRect.top;
+        
+        const svgX = viewBoxX + (mouseX / clientRect.width) * viewBoxWidth;
+        const svgY = viewBoxY + (mouseY / clientRect.height) * viewBoxHeight;
+
+        const zoomFactor = 1.0 + (e.deltaY * 0.001);
+        
+        viewBoxWidth *= zoomFactor;
+        viewBoxHeight *= zoomFactor;
+
+        viewBoxX = svgX - (mouseX / clientRect.width) * viewBoxWidth;
+        viewBoxY = svgY - (mouseY / clientRect.height) * viewBoxHeight;
+
+        svg.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+    }, { passive: false });
+})();
+]]>
+</script>
+</svg>

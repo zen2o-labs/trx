@@ -1,0 +1,41 @@
+let spacing = 150
+let node_w = 120
+let node_h = 80
+
+style .gateway {
+    fill: #fecaca
+    stroke: #ef4444
+}
+
+style .server {
+    fill: #bfdbfe
+    stroke: #3b82f6
+}
+
+# Advanced Network Topology
+layer External {
+    Internet (class: .gateway) { width: node_w, height: node_h }
+    
+    layer DMZ {
+        Firewall_1 { width: node_w, height: node_h }
+        WAF_1 { width: node_w, height: node_h }
+    }
+}
+
+layer Internal {
+    layer Cluster_A {
+        Srv_A1 (class: .server) { width: 100 }
+        Srv_A2 (class: .server) { width: 100 }
+    }
+    
+    layer Cluster_B {
+        Srv_B1 (class: .server) { width: 100 }
+        Srv_B2 (class: .server) { width: 100 }
+    }
+}
+
+Internet -> Firewall_1
+Firewall_1 -> Srv_A1: "Allow HTTP"
+Firewall_1 -> Srv_B1: "Allow DB"
+Srv_A1 -> Srv_A2: "Sync"
+Srv_B1 -> Srv_B2: "Replication"

@@ -1,0 +1,28 @@
+packet IPv4_Complex [width: 800] {
+    0..3: Version
+    4..7: IHL
+    8..13: DSCP
+    14..15: ECN
+    16..31: TotalLength [color: "#3b82f6"]
+    32..47: Identification
+    48..50: Flags
+    51..63: FragmentOffset
+    64..71: TTL
+    72..79: Protocol
+    80..95: HeaderChecksum
+    96..127: SourceAddress [color: "#10b981"]
+    128..159: DestinationAddress [color: "#ef4444"]
+}
+
+packet TCP_Segment [width: 800] {
+    0..15: SourcePort
+    16..31: DestinationPort
+    32..63: SequenceNumber
+    64..95: AckNumber
+    96..99: DataOffset
+    100..102: Reserved
+    103..108: Flags
+    109..124: WindowSize
+    125..140: Checksum
+    141..156: UrgentPointer
+}

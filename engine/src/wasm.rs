@@ -5,7 +5,7 @@ use crate::render::svg::render_svg;
 use trx_layout::apply_layout;
 use wasm_bindgen::prelude::*;
 
-// ─── Milestone 08: Scenario-aware WasmProject ──────────────────────
+// Scenario-aware WasmProject ──────────────────────
 
 #[wasm_bindgen]
 pub struct WasmProject {
@@ -18,7 +18,25 @@ impl WasmProject {
     /// Optionally filter to a named scenario (Milestone 08).
     #[wasm_bindgen(constructor)]
     pub fn new(input: &str, scenario: Option<String>) -> Result<WasmProject, String> {
-        let mut project = parse(input).map_err(|e| e.to_string())?;
+        console_error_panic_hook::set_once();
+
+        let mut project = parse(input).map_err(|e| {
+            if let crate::parser::error::ParseError::ParseFailed { location, message } = e {
+                let diag = serde_json::json!({
+                    "error": message,
+                    "line": location.line,
+                    "col": location.col
+                });
+                diag.to_string()
+            } else {
+                let diag = serde_json::json!({
+                    "error": e.to_string(),
+                    "line": 0,
+                    "col": 0
+                });
+                diag.to_string()
+            }
+        })?;
 
         // Filter diagrams to the requested scenario if provided
         if let Some(ref s) = scenario {
@@ -27,7 +45,14 @@ impl WasmProject {
                 .retain(|d| d.scenario.as_deref().map(|sc| sc == s).unwrap_or(true));
         }
 
-        evaluate_project(&mut project);
+        evaluate_project(&mut project).map_err(|e| {
+            let diag = serde_json::json!({
+                "error": e.to_string(),
+                "line": 0,
+                "col": 0
+            });
+            diag.to_string()
+        })?;
         apply_layout(&mut project);
 
         Ok(WasmProject { inner: project })
@@ -44,7 +69,7 @@ impl WasmProject {
     }
 }
 
-// ─── Milestone 01: Zero-Copy Pointer Bridge ───────────────────────────────────
+// Zero-Copy Pointer Bridge
 
 /// Allocate `size` bytes of Wasm linear memory and return a pointer.
 /// The JS host writes DSL text here before calling `render_svg_from_ptr`.
@@ -72,10 +97,20 @@ pub unsafe fn render_svg_from_ptr(ptr: *mut u8, len: usize) -> String {
 
     let mut project = match parse(input) {
         Ok(p) => p,
-        Err(e) => return format!("<svg><text>Parse error: {}</text></svg>", e),
+        Err(e) => {
+            let error_msg =
+                if let crate::parser::error::ParseError::ParseFailed { location, message } = e {
+                    format!("Line {}:{}: {}", location.line, location.col, message)
+                } else {
+                    e.to_string()
+                };
+            return format!("<svg><text>Parse error: {}</text></svg>", error_msg);
+        }
     };
 
-    evaluate_project(&mut project);
+    if let Err(e) = evaluate_project(&mut project) {
+        return format!("<svg><text>Evaluation error: {}</text></svg>", e);
+    }
     apply_layout(&mut project);
     render_svg(&project)
 }
