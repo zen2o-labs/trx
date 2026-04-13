@@ -1,3 +1,3 @@
 fn main() {
-    println!("cargo:rerun-if-changed=../grammar/src/trx.pest");
+    println!("cargo:rerun-if-changed=../syntax/src/trx.pest");
 }

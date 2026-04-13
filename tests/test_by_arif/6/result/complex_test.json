@@ -1,0 +1,260 @@
+{
+  "diagrams": [
+    {
+      "name": "Feature Validation Diagram",
+      "root": {
+        "id": "root",
+        "nodes": [],
+        "layers": [
+          {
+            "id": "MainSystem",
+            "nodes": [
+              {
+                "id": "Processor",
+                "class": null,
+                "label": null,
+                "kind": "Box",
+                "properties": {
+                  "width": {
+                    "VariableRef": "math_precedence_test"
+                  },
+                  "height": {
+                    "Unit": [
+                      60.0,
+                      "px"
+                    ]
+                  }
+                },
+                "attributes": {
+                  "shape": "hexagon"
+                },
+                "x": 100.0,
+                "y": 250.0,
+                "width": 310.0,
+                "height": 60.0
+              }
+            ],
+            "layers": [
+              {
+                "id": "SubSystem",
+                "nodes": [
+                  {
+                    "id": "SubWorker1",
+                    "class": null,
+                    "label": null,
+                    "kind": "Box",
+                    "properties": {
+                      "height": {
+                        "Number": 80.0
+                      },
+                      "width": {
+                        "Number": 120.0
+                      }
+                    },
+                    "attributes": {
+                      "shape": "cloud"
+                    },
+                    "x": 58.45546,
+                    "y": 400.0,
+                    "width": 120.0,
+                    "height": 80.0
+                  },
+                  {
+                    "id": "SubWorker2",
+                    "class": null,
+                    "label": null,
+                    "kind": "Box",
+                    "properties": {
+                      "width": {
+                        "Number": 120.0
+                      },
+                      "height": {
+                        "Number": 80.0
+                      }
+                    },
+                    "attributes": {
+                      "shape": "cylinder"
+                    },
+                    "x": 341.5446,
+                    "y": 400.0,
+                    "width": 120.0,
+                    "height": 80.0
+                  }
+                ],
+                "layers": []
+              }
+            ]
+          }
+        ]
+      },
+      "connections": [
+        {
+          "from": "SubWorker1 ",
+          "to": "SubWorker2 ",
+          "arrow": "->",
+          "label": "Internal IPC",
+          "attributes": {}
+        },
+        {
+          "from": "Processor ",
+          "to": "SubWorker1 ",
+          "arrow": "->",
+          "label": "Direct Control",
+          "attributes": {}
+        }
+      ],
+      "scenario": "validation"
+    }
+  ],
+  "packets": [
+    {
+      "name": "DataHeader",
+      "size": "size: \"64 bits\"",
+      "fields": [
+        {
+          "range": "0..7",
+          "name": "protocol_version",
+          "field_type": ""
+        },
+        {
+          "range": "8..23",
+          "name": "payload_length",
+          "field_type": ""
+        },
+        {
+          "range": "24..31",
+          "name": "checksum",
+          "field_type": ""
+        },
+        {
+          "range": "32..63",
+          "name": "reserved",
+          "field_type": ""
+        }
+      ],
+      "constraint": null
+    }
+  ],
+  "states": [
+    {
+      "name": "ServiceLifecycle",
+      "transitions": [
+        {
+          "from": "[*]",
+          "to": "Idle",
+          "trigger": "init"
+        },
+        {
+          "from": "Idle",
+          "to": "Running",
+          "trigger": "start"
+        },
+        {
+          "from": "Running",
+          "to": "Running",
+          "trigger": "processing"
+        },
+        {
+          "from": "Running",
+          "to": "Stopped",
+          "trigger": "stop"
+        },
+        {
+          "from": "Stopped",
+          "to": "[*]",
+          "trigger": "shutdown"
+        }
+      ]
+    }
+  ],
+  "xys": [
+    {
+      "name": "PerformanceChart",
+      "x_axis": "Time (ms)",
+      "y_axis": "Load (%)",
+      "data": "0,10 100,45 200,85 300,50 400,95"
+    }
+  ],
+  "sqltables": [
+    {
+      "name": "UserData",
+      "fields": [
+        {
+          "name": "id",
+          "field_type": "Integer",
+          "is_pk": true,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "username",
+          "field_type": "String",
+          "is_pk": false,
+          "is_fk": false,
+          "fk_ref": null
+        },
+        {
+          "name": "role_id",
+          "field_type": "Integer",
+          "is_pk": false,
+          "is_fk": true,
+          "fk_ref": "Roles.id"
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "screen_width": {
+      "Unit": [
+        800.0,
+        "px"
+      ]
+    },
+    "screen_height": {
+      "Unit": [
+        600.0,
+        "px"
+      ]
+    },
+    "math_precedence_test": {
+      "BinaryOp": [
+        {
+          "Number": 10.0
+        },
+        "+",
+        {
+          "BinaryOp": [
+            {
+              "BinaryOp": [
+                {
+                  "Number": 20.0
+                },
+                "*",
+                {
+                  "Number": 30.0
+                }
+              ]
+            },
+            "/",
+            {
+              "Number": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    "unit_test_vh": {
+      "Unit": [
+        100.0,
+        "vh"
+      ]
+    },
+    "unit_test_pct": {
+      "Unit": [
+        50.0,
+        "%"
+      ]
+    }
+  },
+  "classes": {}
+}

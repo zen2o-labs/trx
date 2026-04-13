@@ -23,6 +23,7 @@ kurbo = { workspace = true }
 smallvec = { workspace = true }
 petgraph = { workspace = true }
 libm = { workspace = true }
+lazy_static = "1.4"
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 console_error_panic_hook = { workspace = true }

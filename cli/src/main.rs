@@ -124,14 +124,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut project = match parse(&preprocessed.flattened_code) {
         Ok(p) => p,
         Err(e) => {
-            let (mut err_msg, mut err_line, mut err_col) = ("".to_string(), 0, 0);
-            if let ParseError::ParseFailed { location, message } = &e {
-                err_msg = message.clone();
-                err_line = location.line;
-                err_col = location.col;
-            } else {
-                err_msg = e.to_string();
-            }
+            let (err_msg, err_line, err_col) = match &e {
+                ParseError::ParseFailed { location, message } => (message.clone(), location.line, location.col),
+                _ => (e.to_string(), 0, 0),
+            };
 
             let mut real_file = input_path.to_string();
             let mut real_line = err_line;

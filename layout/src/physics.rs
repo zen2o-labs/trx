@@ -28,7 +28,7 @@ pub struct ForceParams {
 impl Default for ForceParams {
     fn default() -> Self {
         Self {
-            charge: -2000.0,
+            charge: 2000.0, // Positive charge for repulsion
             spring_length: 150.0,
             spring_stiffness: 0.05,
             damping: 0.1,
@@ -36,9 +36,12 @@ impl Default for ForceParams {
     }
 }
 
+/// Calculates the repulsion force between two points based on an inverse-square law.
+/// A positive charge results in a repulsive force, pushing the points apart.
 pub fn calculate_repulsion(p1: Vector2D, p2: Vector2D, charge: f64) -> Vector2D {
     let dx = p1.x - p2.x;
     let dy = p1.y - p2.y;
+    // Add a small epsilon to avoid division by zero
     let dist_sq = dx * dx + dy * dy + 0.1; 
     let force = charge / dist_sq;
     
