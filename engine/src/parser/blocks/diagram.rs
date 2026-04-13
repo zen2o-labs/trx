@@ -1,5 +1,6 @@
-use crate::ast::{Connection, Expression, Layer, NamedDiagram, Node, ShapeKind};
+use crate::ast::{Connection, Layer, NamedDiagram, Node, ShapeKind};
 use crate::parser::error::ParseError;
+use crate::parser::expressions::parse_math_expr_stable;
 use std::collections::HashMap;
 use trx_syntax::{Rule, TrxPair};
 
@@ -19,7 +20,7 @@ pub fn parse_single_diagram(
     let mut diagram = NamedDiagram::new(name);
 
     for stmt in inner {
-        parse_diagram_stmt(stmt, &mut diagram.root, &mut diagram.connections, classes)?;
+        parse_diagram_stmt(stmt, &mut diagram.root, &mut diagram.connections, classes, &mut diagram.scenario)?;
     }
     Ok(diagram)
 }
@@ -29,15 +30,21 @@ fn parse_diagram_stmt(
     curr_layer: &mut Layer,
     connections: &mut Vec<Connection>,
     classes: &mut HashMap<String, HashMap<String, String>>,
+    scenario: &mut Option<String>,
 ) -> Result<(), ParseError> {
     match pair.as_rule() {
+        Rule::scenario_decl => {
+            let mut inner = pair.into_inner();
+            let s_lit = inner.next().unwrap().as_str().trim_matches('"').to_string();
+            *scenario = Some(s_lit);
+        }
         Rule::node_decl => {
             curr_layer.nodes.push(parse_node(pair)?);
         }
         Rule::layer_block => {
             curr_layer
                 .layers
-                .push(parse_layer(pair, connections, classes)?);
+                .push(parse_layer(pair, connections, classes, scenario)?);
         }
         Rule::connection => {
             connections.push(parse_connection(pair)?);
@@ -46,8 +53,6 @@ fn parse_diagram_stmt(
             let mut inner = pair.into_inner();
             let cname = inner.next().unwrap().as_str().to_string(); // identifier
 
-            // Collect the style props (which could be attributes or inline strings for now,
-            // but the rule is `style_props = { (!"}" ~ ANY)* }` so let's parse basic CSS-like KVs manually:
             let cprops_str = inner.next().unwrap().as_str().to_string();
             let mut attrs = HashMap::new();
             for stmt in cprops_str.split(';') {
@@ -72,6 +77,7 @@ fn parse_layer(
     pair: TrxPair,
     connections: &mut Vec<Connection>,
     classes: &mut HashMap<String, HashMap<String, String>>,
+    scenario: &mut Option<String>,
 ) -> Result<Layer, ParseError> {
     let mut inner = pair.into_inner();
     let id = inner.next().unwrap().as_str().to_string();
@@ -82,7 +88,7 @@ fn parse_layer(
     };
 
     for stmt in inner {
-        parse_diagram_stmt(stmt, &mut layer, connections, classes)?;
+        parse_diagram_stmt(stmt, &mut layer, connections, classes, scenario)?;
     }
 
     Ok(layer)
@@ -90,7 +96,7 @@ fn parse_layer(
 
 fn parse_node(pair: TrxPair) -> Result<Node, ParseError> {
     let mut inner = pair.into_inner();
-    let id = inner.next().unwrap().as_str().to_string();
+    let id = inner.next().ok_or(ParseError::MissingId)?.as_str().trim().to_string();
 
     let mut attributes = HashMap::new();
     let mut properties = HashMap::new();
@@ -100,7 +106,6 @@ fn parse_node(pair: TrxPair) -> Result<Node, ParseError> {
     for item in inner {
         match item.as_rule() {
             Rule::identifier => {
-                // If there's an extra identifier before attributes, it's the class ref (since first identifier was extracted before this loop)
                 class = Some(item.as_str().to_string());
             }
             Rule::attributes => {
@@ -118,7 +123,7 @@ fn parse_node(pair: TrxPair) -> Result<Node, ParseError> {
                 for prop in item.into_inner() {
                     let mut p_inner = prop.into_inner();
                     let key = p_inner.next().unwrap().as_str().to_string();
-                    let expr = parse_expression(p_inner.next().unwrap())?;
+                    let expr = parse_math_expr_stable(p_inner.next().unwrap())?;
                     properties.insert(key, expr);
                 }
             }
@@ -176,77 +181,4 @@ fn parse_connection(pair: TrxPair) -> Result<Connection, ParseError> {
         label,
         attributes,
     })
-}
-
-fn parse_expression(pair: TrxPair) -> Result<Expression, ParseError> {
-    let mut inner = pair.into_inner();
-    let first = inner.next().unwrap();
-    let mut expr = parse_math_term(first)?;
-
-    while let Some(op_pair) = inner.next() {
-        let op = op_pair.as_str().trim().to_string();
-        if let Some(right_pair) = inner.next() {
-            let right = parse_math_term(right_pair)?;
-            expr = Expression::BinaryOp(Box::new(expr), op, Box::new(right));
-        }
-    }
-    Ok(expr)
-}
-
-fn parse_math_term(pair: TrxPair) -> Result<Expression, ParseError> {
-    let mut inner = pair.into_inner();
-    let first = inner.next().unwrap();
-
-    let (term_pair, is_negative) = if first.as_str() == "-" {
-        (inner.next().unwrap(), true)
-    } else {
-        (first, false)
-    };
-
-    let mut expr = match term_pair.as_rule() {
-        Rule::function_call => {
-            let mut inner = term_pair.into_inner();
-            let mut name_parts = Vec::new();
-            while let Some(peek) = inner.peek() {
-                if peek.as_rule() == Rule::identifier {
-                    name_parts.push(inner.next().unwrap().as_str().to_string());
-                } else {
-                    break;
-                }
-            }
-            let name = name_parts.join(".");
-            let mut args = Vec::new();
-            for expr_pair in inner {
-                if expr_pair.as_rule() == Rule::math_expression {
-                    args.push(parse_expression(expr_pair)?);
-                }
-            }
-            Expression::FunctionCall { name, args }
-        }
-        Rule::number => {
-            let n = term_pair.as_str().parse::<f64>().unwrap_or(0.0);
-            Expression::Number(n)
-        }
-        Rule::number_with_unit => {
-            let s = term_pair.as_str();
-            let num_str: String = s
-                .chars()
-                .take_while(|c| c.is_numeric() || *c == '.')
-                .collect();
-            let unit: String = s
-                .chars()
-                .skip_while(|c| c.is_numeric() || *c == '.')
-                .collect();
-            let n = num_str.parse::<f64>().unwrap_or(0.0);
-            Expression::Unit(n, unit)
-        }
-        Rule::identifier => Expression::VariableRef(term_pair.as_str().to_string()),
-        _ => Expression::String(term_pair.as_str().to_string()),
-    };
-
-    if is_negative {
-        expr = Expression::UnaryOp("-".to_string(), Box::new(expr));
-    }
-
-    Ok(expr)
 }

@@ -39,7 +39,15 @@ pub fn render_packets(project: &Project, svg: &mut String, y_offset: &mut f32) {
             .iter()
             .map(|f| parse_bit_width(&f.range))
             .sum();
-        let total_bits = if total_bits > 0.0 { total_bits } else { 32.0 }; // fallback
+
+        if total_bits == 0.0 {
+            svg.push_str(&format!(
+                "<text x=\"20\" y=\"{}\" fill=\"#ef4444\" font-size=\"12px\">[Empty/Invalid Bit Definition]</text>",
+                *y_offset + 20.0
+            ));
+            *y_offset += 50.0;
+            continue;
+        }
 
         for field in &packet.fields {
             let bits = parse_bit_width(&field.range);

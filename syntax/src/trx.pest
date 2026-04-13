@@ -7,12 +7,15 @@ diagram = { "#" ~ WHITESPACE? ~ diagram_name ~ NEWLINE* ~ diagram_stmt* }
 diagram_name = @{ (!NEWLINE ~ ANY)+ }
 
 diagram_stmt = _{
+    scenario_decl |
     variable_decl |
     layer_block |
     connection |
     node_decl |
     style_decl
 }
+
+scenario_decl = { "[" ~ "scenario" ~ ":" ~ string_literal ~ "]" }
 
 statement = _{
     packet_decl |
@@ -28,7 +31,8 @@ math_expression = { math_term ~ (WHITESPACE* ~ math_op ~ WHITESPACE* ~ math_term
 function_call = { (identifier ~ ("." ~ identifier)*) ~ "(" ~ (math_expression ~ ("," ~ math_expression)*)? ~ ")" }
 math_term = { "-"? ~ (number_with_unit | number | function_call | property_ref | identifier | string_literal | color_literal) }
 property_ref = { identifier ~ ("." ~ identifier)+ }
-number_with_unit = @{ number ~ identifier }
+number_with_unit = @{ number ~ unit }
+unit = @{ identifier | "%" }
 math_op = { "==" | "!=" | "<=" | ">=" | "<" | ">" | "+" | "-" | "*" | "/" }
 number = @{ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
 
@@ -37,7 +41,8 @@ property_block = { "{" ~ (property_assignment ~ ("," | NEWLINE)*)* ~ "}" }
 
 layer_block = { "layer" ~ identifier ~ "{" ~ (diagram_stmt)* ~ "}" }
 
-node_decl = { ("node" ~ WHITESPACE+)? ~ identifier ~ ("(" ~ "class:" ~ "." ~ identifier ~ ")")? ~ ("[" ~ attributes ~ "]")? ~ (WHITESPACE* ~ property_block)? }
+node_decl = { (node_kw ~ identifier | identifier) ~ ("(" ~ "class:" ~ "." ~ identifier ~ ")")? ~ ("[" ~ attributes ~ "]")? ~ (WHITESPACE* ~ property_block)? }
+node_kw = _{ "node" ~ WHITESPACE+ }
 
 node_ref = { identifier ~ ("." ~ identifier)* }
 connection = { node_ref ~ WHITESPACE* ~ connection_arrow ~ WHITESPACE* ~ node_ref ~ (":" ~ label)? }
@@ -67,15 +72,14 @@ string_literal = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
 metric_bind = { "@" ~ (!(NEWLINE | "}") ~ ANY)* }
 
 sqltable_decl = { "sqltable" ~ identifier ~ "{" ~ sqltable_field* ~ "}" }
-sqltable_field = { pk_fk? ~ identifier ~ ":" ~ identifier ~ ("->" ~ identifier)? }
+sqltable_field = { pk_fk? ~ identifier ~ ":" ~ identifier ~ ("->" ~ node_ref)? }
 pk_fk = { "PK" | "FK" }
 
-reserved    = _{ "packet" | "state" | "xy" | "constraint" | "sqltable" }
-identifier  = @{ !reserved ~ (ASCII_ALPHANUMERIC | "_")+ }
+identifier  = @{ !keyword ~ (ASCII_ALPHANUMERIC | "_")+ }
+keyword     = @{ ("packet" | "state" | "xy" | "constraint" | "sqltable" | "let" | "scenario") ~ !ASCII_ALPHANUMERIC }
 label       = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
 attributes  = { attribute_kv ~ ("," ~ attribute_kv)* }
 attribute_kv = { identifier ~ (":" ~ WHITESPACE* ~ string_literal_or_id)? }
 string_literal_or_id = { string_literal | identifier | color_literal }
 color_literal = @{ "#" ~ ASCII_HEX_DIGIT+ }
 style_props = { (!"}" ~ ANY)* }
-

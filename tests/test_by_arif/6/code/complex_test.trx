@@ -1,0 +1,57 @@
+// TRX 2.0 Feature Verification Test
+
+let screen_width = 800px
+let screen_height = 600px
+let math_precedence_test = 10 + 20 * 30 / 2 // Should be 10 + (20 * 30 / 2) = 10 + 300 = 310
+let unit_test_vh = 100vh
+let unit_test_pct = 50%
+
+# Feature Validation Diagram
+[scenario: "validation"]
+layer MainSystem {
+    Processor [shape: hexagon] { 
+        width: math_precedence_test, 
+        height: 60px 
+    }
+    
+    layer SubSystem {
+        SubWorker1 [shape: cloud] {
+            width: 120,
+            height: 80
+        }
+        SubWorker2 [shape: cylinder] {
+            width: 120,
+            height: 80
+        }
+        SubWorker1 -> SubWorker2 : "Internal IPC"
+    }
+
+    Processor -> SubWorker1 : "Direct Control"
+}
+
+xy PerformanceChart {
+    x_axis: "Time (ms)"
+    y_axis: "Load (%)"
+    data: "0,10 100,45 200,85 300,50 400,95"
+}
+
+packet DataHeader [size: "64 bits"] {
+    0..7   : protocol_version
+    8..23  : payload_length
+    24..31 : checksum
+    32..63 : reserved
+}
+
+state ServiceLifecycle {
+    [*] -> Idle : @init
+    Idle -> Running : @start
+    Running -> Running : @processing
+    Running -> Stopped : @stop
+    Stopped -> [*] : @shutdown
+}
+
+sqltable UserData {
+    PK id : Integer
+    username : String
+    FK role_id : Integer -> Roles.id
+}
